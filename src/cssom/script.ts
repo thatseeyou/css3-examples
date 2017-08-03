@@ -29,7 +29,24 @@ function dumpStyleSheet(level: number, index: number, styleSheet:CSSStyleSheet) 
             let cssRule = styleSheet.cssRules[i];
 
             if (cssRule.type == CSSRule.STYLE_RULE /* 1 */ ) {
-                console.log(`${indent}     ${cssRule.cssText}`);
+                // console.log(`${indent}     ${cssRule.cssText}`);
+                const maxSelector = 30;
+
+                let cssStyleRule = cssRule as CSSStyleRule;
+                var selector = cssStyleRule.selectorText.slice(0, maxSelector);
+                let omitNumber = cssStyleRule.selectorText.length - maxSelector;
+                if (omitNumber > 0) {
+                    selector += `...(${omitNumber})`;
+                }
+
+                console.log(`${indent}     ${selector} {`);
+                for (let i = 0; i < cssStyleRule.style.length; i++) {
+                    let styleKey = cssStyleRule.style[i];
+                    let value = cssStyleRule.style.getPropertyValue(styleKey);
+                    console.log(`${indent}         ${styleKey} : ${value};`);
+                }
+
+                console.log(`${indent}     }`);
             }
             else if (cssRule.type == CSSRule.IMPORT_RULE /* 3 */) {
                 dumpStyleSheet(level + 1, i, (cssRule as CSSImportRule).styleSheet);
