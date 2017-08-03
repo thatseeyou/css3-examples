@@ -4,6 +4,8 @@
   "description": "CSS3 examples",
   "main": "index.js",
   "scripts": {
+    "tsc": "tsc",
+    "build": "tsc && tsc --watch",
     "serve": "lite-server"
   },
   "repository": {
@@ -18,6 +20,7 @@
   },
   "homepage": "https://github.com/thatseeyou/css3-examples#readme",
   "devDependencies": {
-    "lite-server": "^2.3.0"
+    "lite-server": "^2.3.0",
+    "typescript": "^2.4.2"
   }
 }

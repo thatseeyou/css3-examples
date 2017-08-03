@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>CSS Object Model</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="vendor/screenlog.min.js"></script>
+        <link href="cssom/style.css" rel="stylesheet">
+        <style>
+            @import 'cssom/d.css';
+
+            .bar {
+                width: 100px;
+                height: 40px;
+            }
+
+            #b {
+                background-color: orange;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="bar" id="a"></div>
+        <div class="bar" id="b"></div>
+        <div class="bar" id="c"></div>
+        <div class="bar" id="d"></div>
+        <div class="bar" id="e"></div>
+        <div class="bar" id="f"></div>
+        <div class="bar" id="g"></div>
+
+        <p>See console logs</p>
+
+        <script type="text/javascript">
+            screenLog.init({ autoScroll: false });
+        </script>
+        <script src="cssom/script.js"></script>
+    </body>
+</html>

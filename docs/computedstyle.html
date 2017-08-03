@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>CSS Object Model</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="vendor/screenlog.min.js"></script>
+        <script src="utils.js"></script>
+        <style>
+            .div, .form, .dt, .hgroup, .html, .main, 
+            .header, .article, .aside, .details, .figcaption, .footer, .section, .summary, .nav {
+                display: block;
+            }
+            .span {
+                display: inline;
+            }
+            .p, .dl, .multicol {
+                display: block;
+                margin-top: 1em;
+                margin-bottom: 1em;
+            }
+            .pre {
+                display: block;
+                font-family: monospace;
+                margin-top: 1em;
+                margin-bottom: 1em;
+                white-space: pre;
+            }
+            .h1 {
+                display: block;
+                font-size: 2em;
+                font-weight: bold;
+                margin-top: .67em;
+                margin-bottom: .67em;
+            }
+            .table {
+                display: table;
+                border-spacing: 2px;
+                border-collapse: separate;
+                box-sizing: border-box;
+                text-indent: 0;
+            }
+            .thead {
+                display: table-header-group;
+                vertical-align: middle;
+            }
+            .tbody {
+                display: table-row-group;
+                vertical-align: middle;
+            }
+            .tr {
+                display: table-row;
+                vertical-align: inherit;
+            }
+            .td {
+                display: table-cell;
+                vertical-align: inherit;
+                text-align: inherit;
+                padding: 1px;
+            }
+            #divInDiv1 {
+                text-align: center;
+            }
+            #divInDiv1 > div {
+                width: 200px;
+            }
+            #divInDiv2 > div {
+                width: 200px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="div"><span id="span">span</span></div>
+        <div id="div2">DOM property 'align' = 'center'</div>
+        <span id="spanAsDiv" class="div"><div id="divAsSpan" class="span">divAsSpan</div></span>
+
+        <article id="article">article</article>
+
+        <p id="p">p</p>
+        <div id="divAsP" class="p">divAsP</div>
+
+        <pre id="pre">pre</pre>
+        <div id="divAsPre" class="pre">divAsPre</div>
+
+        <h1 id="h1">h1</h1>
+        <div id="divAsH1" class="h1">divAsH1</div>
+
+        <table id="table">
+            <thead id="thead">
+                <tr>
+                    <td>h1c1</td>
+                    <td>h1c2</td>
+                    <td>h1c3</td>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <tr id="tr">
+                    <td id="td">r1c1</td>
+                    <td></td>
+                    <td>r1c3</td>
+                </tr>
+                <tr>
+                    <td>r2c1</td>
+                    <td>r2c2</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id="divAsTable" class="table">
+            <div id="divAsThead" class="thead">
+                <div class="tr">
+                    <div class="td">h1c1</div>
+                    <div class="td">h1c2</div>
+                    <div class="td">h1c3</div>
+                </div>
+            </div>
+            <div id="divAsTbody" class="tbody">
+                <div id="divAsTr" class="tr">
+                    <div id="divAsTd" class="td">r1c1</div>
+                    <div class="td"></div>
+                    <div class="td">r1c3</div>
+                </div>
+                <div class="tr">
+                    <div class="td">r2c1</div>
+                    <div class="td">r2c2</div>
+                    <div class="td"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="divInDiv1"><div>divInDiv1</div></div>
+        <div id="divInDiv2"><div>divInDiv2</div></div>
+
+        <script type="text/javascript">
+            screenLog.init({ autoScroll: false });
+
+            (function() {
+                let div         = document.getElementById('div');
+                let div2        = document.getElementById('div2');
+                let span        = document.getElementById('span');
+                let spanAsDiv   = document.getElementById('spanAsDiv');
+                let divAsSpan   = document.getElementById('divAsSpan');
+                let article     = document.getElementById('article');
+                let p           = document.getElementById('p');
+                let divAsP      = document.getElementById('divAsP');
+                let pre         = document.getElementById('pre');
+                let divAsPre    = document.getElementById('divAsPre');
+                let h1          = document.getElementById('h1');
+                let divAsH1     = document.getElementById('divAsH1');
+                let table       = document.getElementById('table');
+                let divAsTable  = document.getElementById('divAsTable');
+                let thead       = document.getElementById('thead');
+                let divAsThead  = document.getElementById('divAsThead');
+                let tbody       = document.getElementById('tbody');
+                let divAsTbody  = document.getElementById('divAsTbody');
+                let tr          = document.getElementById('tr');
+                let divAsTr     = document.getElementById('divAsTr');
+                let td          = document.getElementById('td');
+                let divAsTd     = document.getElementById('divAsTd');
+                let divInDiv1   = document.getElementById('divInDiv1');
+                let divInDiv2   = document.getElementById('divInDiv2');
+                let divInDiv3   = document.getElementById('divInDiv3');
+
+                Utils.diffComputedStyleForElements(div, span);
+                Utils.diffComputedStyleForElements(div, spanAsDiv);
+                Utils.diffComputedStyleForElements(span, divAsSpan);
+
+                Utils.diffComputedStyleForElements(div, article);
+
+                Utils.diffComputedStyleForElements(div, p);
+                Utils.diffComputedStyleForElements(p, divAsP);
+
+                Utils.diffComputedStyleForElements(div, pre);
+                Utils.diffComputedStyleForElements(pre, divAsPre);
+
+                Utils.diffComputedStyleForElements(div, h1);
+                Utils.diffComputedStyleForElements(h1, divAsH1);
+
+                Utils.diffComputedStyleForElements(div, table);
+                Utils.diffComputedStyleForElements(table, divAsTable);
+                Utils.diffComputedStyleForElements(div, thead);
+                Utils.diffComputedStyleForElements(thead, divAsThead);
+                Utils.diffComputedStyleForElements(div, tbody);
+                Utils.diffComputedStyleForElements(tbody, divAsTbody);
+                Utils.diffComputedStyleForElements(div, tr);
+                Utils.diffComputedStyleForElements(tr, divAsTr);
+                Utils.diffComputedStyleForElements(div, td);
+                Utils.diffComputedStyleForElements(td, divAsTd);
+
+
+                // HTMLDivElement has 'align' property. 
+                // Changing DOM 'align' affects CSS property 'text-align'.
+                div2.align = 'center';
+                Utils.diffComputedStyleForElements(div, div2);
+
+                // DOM 'align' property affects block element but CSS 'text-align' inline only.
+                // prefixed properties (-moz-center, -webkit-center, etc.) acts as DOM 'align' property.
+                divInDiv2.align = 'center';
+                Utils.diffComputedStyleForElements(divInDiv1, divInDiv2);
+            })();
+
+        </script>
+    </body>
+</html>
