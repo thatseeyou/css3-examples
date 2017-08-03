@@ -58,6 +58,30 @@
                 text-align: inherit;
                 padding: 1px;
             }
+            .ul {
+                display: block;
+                list-style-type: disc;
+                margin-top: 1em;
+                margin-bottom: 1em;
+                padding-left: 40px;
+            }
+            .ol {
+                display: block;
+                list-style-type: decimal;
+                margin-top: 1em;
+                margin-bottom: 1em;
+                padding-left: 40px;
+            }
+            .li {
+                display: list-item;
+                text-align: left;
+            }
+            .a {
+                text-decoration: underline;
+                cursor: pointer;
+                color: rgb(0, 0, 238);
+            }
+
             #divInDiv1 {
                 text-align: center;
             }
@@ -130,8 +154,31 @@
             </div>
         </div>
 
+        <ul id="ul">
+            <li id="li">ul1</li>
+            <li>ul2</li>
+        </ul>
+
+        <div id="divAsUl" class="ul">
+            <div id="divAsLi" class="li">divAsUl1</div>
+            <div class="li">divAsUl2</div>
+        </div>
+
+        <ol id="ol">
+            <li>ol1</li>
+            <li>ol2</li>
+        </ol>
+        <div id="divAsOl" class="ol">
+            <div class="li">divAsOl1 (chrome and safari works but firefox does not.)</div>
+            <div class="li">divAsOl2 (chrome and safari works but firefox does not.)</div>
+        </div>
+
+        <a id="a" href="https://duckduckgo.com">DuckDuckGo</a>
+        <span id="spanAsA" href="https://duckduckgo.com" class="a">DuckDuckGo</span>
+
         <div id="divInDiv1"><div>divInDiv1</div></div>
         <div id="divInDiv2"><div>divInDiv2</div></div>
+
 
         <script type="text/javascript">
             screenLog.init({ autoScroll: false });
@@ -149,6 +196,7 @@
                 let divAsPre    = document.getElementById('divAsPre');
                 let h1          = document.getElementById('h1');
                 let divAsH1     = document.getElementById('divAsH1');
+
                 let table       = document.getElementById('table');
                 let divAsTable  = document.getElementById('divAsTable');
                 let thead       = document.getElementById('thead');
@@ -159,6 +207,15 @@
                 let divAsTr     = document.getElementById('divAsTr');
                 let td          = document.getElementById('td');
                 let divAsTd     = document.getElementById('divAsTd');
+
+                let a           = document.getElementById('a');
+                let spanAsA     = document.getElementById('spanAsA');
+
+                let ul          = document.getElementById('ul');
+                let divAsUl     = document.getElementById('divAsUl');
+                let li          = document.getElementById('li');
+                let divAsLi     = document.getElementById('divAsLi');
+
                 let divInDiv1   = document.getElementById('divInDiv1');
                 let divInDiv2   = document.getElementById('divInDiv2');
                 let divInDiv3   = document.getElementById('divInDiv3');
@@ -189,6 +246,16 @@
                 Utils.diffComputedStyleForElements(div, td);
                 Utils.diffComputedStyleForElements(td, divAsTd);
 
+                Utils.diffComputedStyleForElements(div, ul);
+                Utils.diffComputedStyleForElements(ul, divAsUl);
+                Utils.diffComputedStyleForElements(div, li);
+                Utils.diffComputedStyleForElements(li, divAsLi);
+
+                Utils.diffComputedStyleForElements(div, ol);
+                Utils.diffComputedStyleForElements(ol, divAsOl);
+
+                Utils.diffComputedStyleForElements(span, a);
+                Utils.diffComputedStyleForElements(a, spanAsA);
 
                 // HTMLDivElement has 'align' property. 
                 // Changing DOM 'align' affects CSS property 'text-align'.
@@ -199,6 +266,7 @@
                 // prefixed properties (-moz-center, -webkit-center, etc.) acts as DOM 'align' property.
                 divInDiv2.align = 'center';
                 Utils.diffComputedStyleForElements(divInDiv1, divInDiv2);
+
             })();
 
         </script>
