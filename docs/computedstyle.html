@@ -26,6 +26,17 @@
                 margin-bottom: 1em;
                 white-space: pre;
             }
+            .code {
+                display: inline;
+                font-family: monospace;
+            }
+            .blockquote, .figure {
+                display: block;
+                margin-top: 1em;
+                margin-bottom: 1em;
+                margin-left: 40px;
+                margin-right: 40px;
+            }
             .h1 {
                 display: block;
                 font-size: 2em;
@@ -81,6 +92,9 @@
                 cursor: pointer;
                 color: rgb(0, 0, 238);
             }
+            #nav {
+                list-style-type: none;
+            }
 
             #divInDiv1 {
                 text-align: center;
@@ -101,14 +115,20 @@
 
         <article id="article">article</article>
 
+        <h1 id="h1">h1</h1>
+        <div id="divAsH1" class="h1">divAsH1</div>
+
         <p id="p">p</p>
         <div id="divAsP" class="p">divAsP</div>
 
         <pre id="pre">pre</pre>
         <div id="divAsPre" class="pre">divAsPre</div>
 
-        <h1 id="h1">h1</h1>
-        <div id="divAsH1" class="h1">divAsH1</div>
+        <code id="code">int i;</code>
+        <span id="spanAsCode" class="code">int i;</span>
+
+        <blockquote id="blockquote">Hello, World!</blockquote>
+        <div id="divAsBlockQuote" class="blockquote">Hello, World! too</div>
 
         <table id="table">
             <thead id="thead">
@@ -173,6 +193,13 @@
             <div class="li">divAsOl2 (chrome and safari works but firefox does not.)</div>
         </div>
 
+        <!-- ul does not need.-->
+        <nav id="nav">
+            <li>Ch 1.</li>
+            <li>Ch 1.</li>
+            <li>Ch 1.</li>
+        </nav>
+
         <a id="a" href="https://duckduckgo.com">DuckDuckGo</a>
         <span id="spanAsA" href="https://duckduckgo.com" class="a">DuckDuckGo</span>
 
@@ -190,12 +217,17 @@
                 let spanAsDiv   = document.getElementById('spanAsDiv');
                 let divAsSpan   = document.getElementById('divAsSpan');
                 let article     = document.getElementById('article');
-                let p           = document.getElementById('p');
-                let divAsP      = document.getElementById('divAsP');
-                let pre         = document.getElementById('pre');
-                let divAsPre    = document.getElementById('divAsPre');
                 let h1          = document.getElementById('h1');
                 let divAsH1     = document.getElementById('divAsH1');
+                let p           = document.getElementById('p');
+                let divAsP      = document.getElementById('divAsP');
+
+                let pre         = document.getElementById('pre');
+                let divAsPre    = document.getElementById('divAsPre');
+                let code        = document.getElementById('code');
+                let spanAsPre   = document.getElementById('spanAsCode');
+                let blockquote  = document.getElementById('blockquote');
+                let divAsBlockQuote = document.getElementById('divAsBlockQuote');
 
                 let table       = document.getElementById('table');
                 let divAsTable  = document.getElementById('divAsTable');
@@ -226,14 +258,18 @@
 
                 Utils.diffComputedStyleForElements(div, article);
 
+                Utils.diffComputedStyleForElements(div, h1);
+                Utils.diffComputedStyleForElements(h1, divAsH1);
+
                 Utils.diffComputedStyleForElements(div, p);
                 Utils.diffComputedStyleForElements(p, divAsP);
 
                 Utils.diffComputedStyleForElements(div, pre);
                 Utils.diffComputedStyleForElements(pre, divAsPre);
-
-                Utils.diffComputedStyleForElements(div, h1);
-                Utils.diffComputedStyleForElements(h1, divAsH1);
+                Utils.diffComputedStyleForElements(span, code);
+                Utils.diffComputedStyleForElements(code, spanAsCode);
+                Utils.diffComputedStyleForElements(div, blockquote);
+                Utils.diffComputedStyleForElements(blockquote, divAsBlockQuote);
 
                 Utils.diffComputedStyleForElements(div, table);
                 Utils.diffComputedStyleForElements(table, divAsTable);
