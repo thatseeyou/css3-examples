@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Selectors</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            .block    { display: block; }
+            h2        { margin-bottom: 0; }
+            .box30    { width: 30px; height: 30px; }
+            .box100   { width: 100px; height: 100px; }
+            .width200 { width: 200px; }
+        </style>
+    </head>
+    <body>
+        <!-- the order of declarations matters :link > :visited > :hover > :active -->
+        <style>
+            .ex-order-1 a:link  { background-color: gold; }
+            .ex-order-1 a:hover { background-color: yellowgreen; }
+        </style>
+        <div class="ex-order-1">
+            <h2>:link > :hover</h2>
+            <a class="block" href="http://zdnet.co.kr">ZDNet Korean</a>
+        </div>
+        <style>
+            .ex-order-2 a:hover { background-color: yellowgreen; }
+            .ex-order-2 a:link  { background-color: gold; }
+        </style>
+        <div class="ex-order-2">
+            <h2>:hover > :link (Chrome and Firefox react differently)</h2>
+            <a class="block" href="http://zdnet.co.kr">ZDNet Korean</a>
+        </div>
+
+        <style>
+            .ex-hover > div             { background-color: yellow; }
+            .ex-hover > div > div       { background-color: green; }
+            .ex-hover > div > div > div { background-color: pink; }
+            .ex-hover div:hover         { background-color: red; }
+            /* .ex-hover span              { display: block; } */
+            .ex-hover > span, 
+            .ex-hover > span > span,
+            .ex-hover > span > span > span,
+            .ex-hover > span > span > span > span,
+            .ex-hover > span > span > span > span > span 
+                                        { background-color: yellow; }
+            .ex-hover span:hover        { background-color: red; }
+        </style>
+        <div class="ex-hover">
+            <h2>make :hover bubbles up only to ascendants (compare with <a href="https://css-tricks.com/star-ratings/">https://css-tricks.com/star-ratings/</a>)</h2>
+            <div>grand parent<div>parent<div>child</div></div></div>
+            <span>⭐️<span>⭐️<span>⭐️<span>⭐️<span>⭐️</span></span></span></span></span>
+        </div>
+
+        <style>
+            .ex-focus > div             { background-color: yellow; }
+            .ex-focus > div > div       { background-color: green; }
+            .ex-focus > div > div > div { background-color: pink; }
+            .ex-focus :focus            { background-color: red; }
+        </style>
+        <div class="ex-focus">
+            <h2>:focus does not bubble up to ascendants</h2>
+            <div>grand parent<div>parent<input value="child"></div></div>
+        </div>
+
+        <style>
+            .ex-empty :empty         { background-color: orange; }
+            .ex-empty :empty::before { content: "empty"; color: red; }
+        </style>
+        <div class="ex-empty">
+            <h2>:empty can find empty elements</h2>
+            <div></div>
+            <div> </div>
+            <div>Only text</div>
+            <div><span>child element</span></div>
+        </div>
+
+        <style>
+            .ex-first-letter ::first-letter { font-size: 150%; color: purple; }
+            .ex-first-letter .before::before { content: "정말 "; }
+        </style>
+        <div class="ex-first-letter">
+            <h2>::first-letter</h2>
+            <div>안녕하세요?</div>
+            <div>"안녕하세요?"</div>
+            <div class="before">안녕하세요?</div>
+        </div>
+
+        <style>
+            .ex-first-line ::first-line { color: purple; }
+        </style>
+        <div class="ex-first-line">
+            <h2>::first-line</h2>
+            <div>first line<br>second line</div>
+            <div class="width200">로렘 입섬, 어쩌구 저쩌구, 날이 참 더구나. </div>
+        </div>
+
+        <style>
+            .ex-selection .hidden-answer { color: white; background-color: white; } 
+            .ex-selection .answer::selection,
+            .ex-selection .answer ::selection      { color: black; } 
+            .ex-selection .answer::-moz-selection,
+            .ex-selection .answer ::-moz-selection { color: black; } 
+        </style>
+        <div class="ex-selection">
+            <h2>::selection (firefox: ::-moz-selection)</h2>
+            <div>Q) Who are you? (drag answer to select)</div>
+            <div class="answer">A) <span class="hidden-answer">I'm you.</span></div>
+        </div>
+
+        <style>
+            .ex-attribute a { display: block; }
+            .ex-attribute [href*="github"] { background-color: green; }
+            .ex-attribute [href] { background-color: red; }
+            .ex-attribute [href*="stack"] { background-color: green; }
+        </style>
+        <div class="ex-attribute">
+            <h2>attribute selectors (order matters)</h2>
+            <a>no href</a>
+            <a href="https://github.com">github</a>
+            <a href="https://stackoverflow.com">stackoverflow</a>
+        </div>
+
+        <style>
+            .ex-child>div { margin-bottom: 10px; }
+            .ex-child>div:nth-of-type(1) :first-child::after          { content: " (fist-child)"; color: blue;}
+            .ex-child>div:nth-of-type(2) :first-of-type::after        { content: " (first-of-type)"; color: green; }
+            .ex-child>div:nth-of-type(3) article:first-of-type::after { content: " (article:first-of-type)"; color: green;}
+            .ex-child>div:nth-of-type(4) :last-child::after           { content: " (last-child)"; color: blue;}
+            .ex-child>div:nth-of-type(5) :nth-child(odd)::after       { content: " (nth-child(odd))"; color: blue;}
+            .ex-child>div:nth-of-type(6) :nth-of-type(odd)::after     { content: " (nth-of-type(odd))"; color: green;}
+        </style>
+        <div class="ex-child">
+            <h2>child selectors</h2>
+            <div>
+                <div>div1</div>
+                <article>article1</article>
+                <article>article2</article>
+                <div>div2</div>
+                <div>div3</div>
+            </div>
+            <div>
+                <div>div1</div>
+                <article>article1</article>
+                <article>article2</article>
+                <div>div2</div>
+                <div>div3</div>
+            </div>
+            <div>
+                <div>div1</div>
+                <article>article1</article>
+                <article>article2</article>
+                <div>div2</div>
+                <div>div3</div>
+            </div>
+            <div>
+                <div>div1</div>
+                <article>article1</article>
+                <article>article2</article>
+                <div>div2</div>
+                <div>div3</div>
+            </div>
+            <div>
+                <div>div1</div>e
+                <article>article1</article>
+                <article>article2</article>
+                <div>div2</div>
+                <div>div3</div>
+            </div>
+            <div>
+                <div>div1</div>
+                <article>article1</article>
+                <article>article2</article>
+                <div>div2</div>
+                <div>div3</div>
+            </div>
+        </div>
+
+        <style>
+            .ex-range input:in-range { color: blue; font-size: 2em;}
+            .ex-range input:out-of-range { color: red; font-size: 5em;}
+        </style>
+        <div class="ex-range">
+            <h2>:in-range, :out-of-range</h2>
+            <input class="width200" type="number" min="1" max="10" placeholder="in-range: 1 to 10">
+        </div>
+
+        <style>
+            .ex-sibling div ~ div::after { content: " (div ~ div)"; color: blue;}
+            .ex-sibling .title + div { font-size: 1.5em;}
+            .ex-sibling .title + div + div { font-size: 2.0em;}
+            .ex-sibling .title + div + div:hover { background-color: orange;}
+        </style>
+        <div class="ex-sibling">
+            <h2>sibling selectors (+, ~)</h2>
+            <div>aaa</div>
+            <div>bbb</div>
+            <div class="title">title</div>
+            <div>desc</div>pe
+            <div>ccc</div>
+        </div>
+        <style>
+            .ex-not div:not(:first-of-type)::after { content: " (div:not(:first-child)::after)"; color: blue;}
+            .ex-not div:not(.second)                  { background-color: yellow; }
+        </style>
+        <div class="ex-not">
+            <h2>:not() selector</h2>
+            <div>first</div>
+            <div class="second">second</div>
+            <div>third</div>
+        </div>
+
+
+    </body>
+</html>
