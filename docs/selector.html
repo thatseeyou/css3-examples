@@ -198,9 +198,10 @@
             <div>desc</div>pe
             <div>ccc</div>
         </div>
+
         <style>
             .ex-not div:not(:first-of-type)::after { content: " (div:not(:first-child)::after)"; color: blue;}
-            .ex-not div:not(.second)                  { background-color: yellow; }
+            .ex-not div:not(.second)               { background-color: yellow; }
         </style>
         <div class="ex-not">
             <h2>:not() selector</h2>
@@ -208,6 +209,24 @@
             <div class="second">second</div>
             <div>third</div>
         </div>
+
+        <style>
+            .ex-table table > tr         { color: yellow; }
+            .ex-table table > tbody > tr { color: red; }
+            .ex-table table tr           { background-color: green; }
+        </style>
+        <div class="ex-table">
+            <h2>tbody inserted automatically</h2>
+            <table>
+                <tr>
+                    <td>11</td><td>12</td>
+                </tr>
+                <tr>
+                    <td>21</td><td>22</td>
+                </tr>
+            </table>
+        </div>
+
 
 
     </body>
