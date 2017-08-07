@@ -160,7 +160,7 @@
                 <div>div3</div>
             </div>
             <div>
-                <div>div1</div>e
+                <div>div1</div>
                 <article>article1</article>
                 <article>article2</article>
                 <div>div2</div>
@@ -195,12 +195,12 @@
             <div>aaa</div>
             <div>bbb</div>
             <div class="title">title</div>
-            <div>desc</div>pe
+            <div>desc</div>
             <div>ccc</div>
         </div>
 
         <style>
-            .ex-not div:not(:first-of-type)::after { content: " (div:not(:first-child)::after)"; color: blue;}
+            .ex-not div:not(:first-of-type)::after { content: " (div:not(:first-of-type)::after)"; color: blue;}
             .ex-not div:not(.second)               { background-color: yellow; }
         </style>
         <div class="ex-not">
