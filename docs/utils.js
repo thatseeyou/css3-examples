@@ -35,5 +35,35 @@ var Utils = (function () {
         console.log("END   diff " + desc1 + " | " + desc2);
         console.log('');
     };
+    Utils.showPreviousSiblingCSS = function () {
+        var currentContainer = document.currentScript.parentElement;
+        var styleElement = currentContainer.previousElementSibling;
+        var cssRules = styleElement.sheet.cssRules;
+        var rulesString = '';
+        for (var i = 0; i < cssRules.length; i++) {
+            var cssRule = cssRules[i];
+            if (cssRule.type == CSSRule.STYLE_RULE) {
+                var cssStyleRule = cssRule;
+                var selector = cssStyleRule.selectorText;
+                var styles = '';
+                for (var j = 0; j < cssStyleRule.style.length; j++) {
+                    var styleKey = cssStyleRule.style[j];
+                    var value = cssStyleRule.style.getPropertyValue(styleKey);
+                    if (cssStyleRule.style.length > 1)
+                        styles += "    " + styleKey + " : " + value + ";\n";
+                    else
+                        styles += styleKey + " : " + value + "; ";
+                }
+                if (cssStyleRule.style.length > 1)
+                    rulesString += selector + " {\n" + styles + "}\n";
+                else
+                    rulesString += selector + " { " + styles + "}\n";
+            }
+        }
+        var cssBox = document.createElement("pre");
+        cssBox.innerText = rulesString;
+        cssBox.className = 'cssBox';
+        currentContainer.insertBefore(cssBox, document.currentScript);
+    };
     return Utils;
 }());

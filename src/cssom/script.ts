@@ -40,8 +40,8 @@ function dumpStyleSheet(level: number, index: number, styleSheet:CSSStyleSheet) 
                 }
 
                 console.log(`${indent}     ${selector} {`);
-                for (let i = 0; i < cssStyleRule.style.length; i++) {
-                    let styleKey = cssStyleRule.style[i];
+                for (let j = 0; j < cssStyleRule.style.length; j++) {
+                    let styleKey = cssStyleRule.style[j];
                     let value = cssStyleRule.style.getPropertyValue(styleKey);
                     console.log(`${indent}         ${styleKey} : ${value};`);
                 }

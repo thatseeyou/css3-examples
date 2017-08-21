@@ -34,8 +34,8 @@ function dumpStyleSheet(level, index, styleSheet) {
                     selector += "...(" + omitNumber + ")";
                 }
                 console.log(indent + "     " + selector + " {");
-                for (var i_1 = 0; i_1 < cssStyleRule.style.length; i_1++) {
-                    var styleKey = cssStyleRule.style[i_1];
+                for (var j = 0; j < cssStyleRule.style.length; j++) {
+                    var styleKey = cssStyleRule.style[j];
                     var value = cssStyleRule.style.getPropertyValue(styleKey);
                     console.log(indent + "         " + styleKey + " : " + value + ";");
                 }

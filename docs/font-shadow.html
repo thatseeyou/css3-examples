@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>text-shadow</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="utils.js"></script>
+        <style>
+            p { 
+                margin-top: 0.1em;
+                margin-bottom: 0.1em;
+            }
+            .cssBox {
+                font-size: 1.5em;
+                background-color: yellowgreen;
+            }
+        </style>
+    </head>
+    <body>
+        <style>
+            .ex-3d p { 
+                font-size: 10em; 
+                font-family: GungSeo, "궁서체", AppleMyungjo;
+                color: white;
+                background-color: pink;
+                text-shadow: 0 1px 0 #ccc,
+                        0 2px 0 #c9c9c9,
+                        0 3px 0 #bbb,
+                        0 4px 0 #b9b9b9,
+                        0 5px 0 #aaa,
+                        0 6px 1px rgba(0,0,0,.1),
+                        0 0 5px rgba(0,0,0,.1),
+                        0 1px 3px rgba(0,0,0,.3),
+                        0 3px 5px rgba(0,0,0,.2),
+                        0 5px 10px rgba(0,0,0,.25),
+                        0 10px 10px rgba(0,0,0,.2),
+                        0 20px 20px rgba(0,0,0,.15);
+            }
+        </style>
+        <!-- refer: https://webexpedition18.com/articles/css3-text-shadow-property/ -->
+        <div class="ex-3d">
+            <script>Utils.showPreviousSiblingCSS();</script>
+            <p>오상영 123 ABC</p>
+        </div>
+
+    </body>
+</html>

@@ -40,4 +40,41 @@ class Utils {
         console.log(`END   diff ${desc1} | ${desc2}`);
         console.log('');
     }
+
+    static showPreviousSiblingCSS() {
+        let currentContainer = document.currentScript.parentElement as HTMLElement;
+        let styleElement = currentContainer.previousElementSibling as HTMLStyleElement;
+        let cssRules = (styleElement.sheet as CSSStyleSheet).cssRules;
+
+        let rulesString = '';
+        for (let i = 0; i < cssRules.length; i++) {
+            let cssRule = cssRules[i];
+
+            if (cssRule.type == CSSRule.STYLE_RULE) {
+                let cssStyleRule = cssRule as CSSStyleRule;
+                let selector = cssStyleRule.selectorText;
+
+                let styles = '';
+                for (let j = 0; j < cssStyleRule.style.length; j++) {
+                    let styleKey = cssStyleRule.style[j];
+                    let value = cssStyleRule.style.getPropertyValue(styleKey);
+                    if (cssStyleRule.style.length > 1)
+                        styles += `    ${styleKey} : ${value};\n`;
+                    else
+                        styles += `${styleKey} : ${value}; `;
+                }
+
+                if (cssStyleRule.style.length > 1)
+                    rulesString += `${selector} {\n${styles}}\n`;
+                else
+                    rulesString += `${selector} { ${styles}}\n`;
+            
+            }
+        }
+
+        var cssBox = document.createElement("pre")
+        cssBox.innerText = rulesString;
+        cssBox.className = 'cssBox';
+        currentContainer.insertBefore(cssBox, document.currentScript);
+    }
 }
