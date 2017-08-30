@@ -15,30 +15,32 @@
     </head>
     <body>
         <style>
-            .ex-1 p { font-size: 2em; }
-            .ex-1 p span { font-size: 0.5em; }
+            body { font-size: 16px; }
+            .ex-em p:nth-of-type(1) { font-size: 2em; }
+            .ex-em p:nth-of-type(1) span { font-size: 0.5em; }
+            .ex-em p:nth-of-type(2) { font-size: 200%; }
+            .ex-em p:nth-of-type(2) span { font-size: 50%; }
+            .ex-em p:nth-of-type(3) { font-size: 32px; }
+            .ex-em p:nth-of-type(3) > span { font-size: 16px; }
+            .ex-em p:nth-of-type(3) > span > span { font-size: 8.5px; }
         </style>
         <script>Utils.showPreviousSiblingCSS();</script>
-        <div class="ex-1">
+        <p>em, %는 부모 font-size가 기준이 된다. font-size가 아닌 다른 속성의 값으로 em을 사용하면 자신의 font-size가 기준이 된다.</p>
+        <div class="ex-em">
+            <p>Parent<span>Child<span>Grand Child</span></span></p>
+            <p>Parent<span>Child<span>Grand Child</span></span></p>
             <p>Parent<span>Child<span>Grand Child</span></span></p>
         </div>
 
         <style>
-            .ex-2 p { font-size: 200%; }
-            .ex-2 p span { font-size: 50%; }
+            html { font-size: 10px; }
+            .ex-rem p { font-size: 3.2rem; }
+            .ex-rem p > span { font-size: 1.6rem; }
+            .ex-rem p > span > span { font-size: 0.85rem; }
         </style>
         <script>Utils.showPreviousSiblingCSS();</script>
-        <div class="ex-2">
-            <p>Parent<span>Child<span>Grand Child</span></span></p>
-        </div>
-
-        <style>
-            .ex-3 p { font-size: 32px; }
-            .ex-3 p > span { font-size: 16px; }
-            .ex-3 p > span > span { font-size: 8.5px; }
-        </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
-        <div class="ex-3">
+        <p>rem은 html의 font-size를 기준으로 하기 때문에 부모의 font-size를 고려하지 않아도 된다.</p>
+        <div class="ex-rem">
             <p>Parent<span>Child<span>Grand Child</span></span></p>
         </div>
 
@@ -48,6 +50,7 @@
             .ex-4 p > span > span { font-size: xx-small; }
         </style>
         <script>Utils.showPreviousSiblingCSS();</script>
+        <p>xx-large, medium, xx-smale과 같은 keyword는 절대값이기 때문에 부모 font-size의 영향을 받지 않는다.</p>
         <div class="ex-4">
             <p>Parent<span>Child<span>Grand Child</span></span></p>
         </div>
@@ -72,6 +75,7 @@
             .ex-decoration p:nth-of-type(7) { text-decoration: line-through dashed purple; }
         </style>
         <script>Utils.showPreviousSiblingCSS();</script>
+        <p>text-decoration-line 여러 가지를 동시에 적용할 수 있다.</p>
         <div class="ex-decoration">
             <p>Abc 123 만세</p>
             <p>Abc 123 만세</p>

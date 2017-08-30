@@ -9,10 +9,11 @@
 }
 
 script + p {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    line-height: 1.2;
     border: 2px dashed yellowgreen;
     margin: 10px 0px;
     padding: 5px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    line-height: 1.2;
     width: auto;
 }

@@ -26,6 +26,7 @@
             .ex-line-height > div:nth-of-type(3) > p { font-size: 2em; }
         </style>
         <script>Utils.showPreviousSiblingCSS();</script>
+        <p>line-height는 계산된 값이 상속되기 때문에 비율 자체를 상속하기 위해서는 단위 없이 사용해야 한다.</p>
         <div class="ex-line-height">
             <div>
                 <p>The line-height CSS property sets the amount of space used for lines, such as in text. On block-level elements, it specifies the minimum height of line boxes within the element. On non-replaced inline elements, it specifies the height that is used to calculate line box height.</p>
@@ -51,6 +52,7 @@
             .ex-line-height-2 > div:nth-of-type(4) > p > span.middle { line-height: 1; background-color: royalblue; }
         </style>
         <script>Utils.showPreviousSiblingCSS();</script>
+        <p>각 line의 높이를 결정하는 것은 font-size가 아니라 line-height이다. Inline 요소에 여러 line-height 값이 존재할 경우에는 가장 큰 값이 대표하게 된다. 디폴트 line-height 값은 font-family의 영향을 받으므로 정확한 높이가 필요한 경우에는 line-height를 명시적으로 지정해야 한다.</p>
         <div class="ex-line-height-2">
             <div>
                 <p>The line-height CSS property sets the amount of space used for lines, such as in text. On block-level elements, it specifies the minimum height of line boxes within the element. On non-replaced inline elements, it specifies the height that is used to calculate line box height.</p>
