@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>white-space</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="utils.css" rel="stylesheet">
+        <script src="utils.js"></script>
+        <style>
+            p { 
+                margin-top: 0.1em;
+                margin-bottom: 0.1em;
+                width: 400px;
+                border: 1px solid gray;
+            }
+        </style>
+        <script>
+            function fill() {
+                var currentContainer = document.currentScript.parentElement;
+                var p1 = document.createElement('p');
+                p1.innerHTML = '1. ABC\t123\t<strong>동해물</strong>과       <em>백두산</em>이 마르고 닳도록 하느님이 보우하사 우리나라 만세\n2.무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.';
+
+                currentContainer.appendChild(p1);
+            }
+        </script>
+    </head>
+    <body>
+        <style>
+            .ex-pre p { white-space: pre; }
+        </style>
+        <script>Utils.showPreviousSiblingCSS()</script>
+        <div class="ex-pre">
+            <script>fill();</script>
+        </div>
+
+        <style>
+            .ex-pre-line p { white-space: pre-line; }
+        </style>
+        <script>Utils.showPreviousSiblingCSS()</script>
+        <div class="ex-pre-line">
+            <script>fill();</script>
+        </div>
+        
+        <style>
+            .ex-pre-wrap p { white-space: pre-wrap; }
+        </style>
+        <script>Utils.showPreviousSiblingCSS()</script>
+        <div class="ex-pre-wrap">
+            <script>fill();</script>
+        </div>
+
+        <style>
+            .ex-wrap p { white-space: nowrap; }
+        </style>
+        <script>Utils.showPreviousSiblingCSS()</script>
+        <div class="ex-wrap">
+            <script>fill();</script>
+        </div>
+
+        <style>
+            .ex-normal p { white-space: normal; }
+        </style>
+        <script>Utils.showPreviousSiblingCSS()</script>
+        <div class="ex-normal">
+            <script>fill();</script>
+        </div>
+    </body>
+</html>

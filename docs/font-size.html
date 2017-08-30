@@ -4,15 +4,12 @@
         <title>Fonts</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="utils.css" rel="stylesheet">
         <script src="utils.js"></script>
         <style>
             p { 
                 margin-top: 0.1em;
                 margin-bottom: 0.1em;
-            }
-            .cssBox {
-                font-size: 1.5em;
-                background-color: yellowgreen;
             }
         </style>
     </head>
@@ -21,8 +18,8 @@
             .ex-1 p { font-size: 2em; }
             .ex-1 p span { font-size: 0.5em; }
         </style>
+        <script>Utils.showPreviousSiblingCSS();</script>
         <div class="ex-1">
-            <script>Utils.showPreviousSiblingCSS();</script>
             <p>Parent<span>Child<span>Grand Child</span></span></p>
         </div>
 
@@ -30,18 +27,18 @@
             .ex-2 p { font-size: 200%; }
             .ex-2 p span { font-size: 50%; }
         </style>
+        <script>Utils.showPreviousSiblingCSS();</script>
         <div class="ex-2">
-            <script>Utils.showPreviousSiblingCSS();</script>
             <p>Parent<span>Child<span>Grand Child</span></span></p>
         </div>
 
         <style>
             .ex-3 p { font-size: 32px; }
             .ex-3 p > span { font-size: 16px; }
-            .ex-3 p > span > span { font-size: 9px; }
+            .ex-3 p > span > span { font-size: 8.5px; }
         </style>
+        <script>Utils.showPreviousSiblingCSS();</script>
         <div class="ex-3">
-            <script>Utils.showPreviousSiblingCSS();</script>
             <p>Parent<span>Child<span>Grand Child</span></span></p>
         </div>
 
@@ -50,8 +47,8 @@
             .ex-4 p > span { font-size: medium; }
             .ex-4 p > span > span { font-size: xx-small; }
         </style>
+        <script>Utils.showPreviousSiblingCSS();</script>
         <div class="ex-4">
-            <script>Utils.showPreviousSiblingCSS();</script>
             <p>Parent<span>Child<span>Grand Child</span></span></p>
         </div>
 
@@ -59,10 +56,9 @@
             .ex-transform p > span:nth-of-type(1) { text-transform: uppercase; }
             .ex-transform p > span:nth-of-type(2) { text-transform: lowercase; }
             .ex-transform p > span:nth-of-type(3) { font-variant: small-caps; }
-
         </style>
+        <script>Utils.showPreviousSiblingCSS();</script>
         <div class="ex-transform">
-            <script>Utils.showPreviousSiblingCSS();</script>
             <p><span>abc 123 만세</span> <span>ABC 123 만세</span> <span>Abc 123 만세</span></p>
         </div>
 
@@ -75,8 +71,8 @@
             .ex-decoration p:nth-of-type(6) { text-decoration: underline overline wavy red; }
             .ex-decoration p:nth-of-type(7) { text-decoration: line-through dashed purple; }
         </style>
+        <script>Utils.showPreviousSiblingCSS();</script>
         <div class="ex-decoration">
-            <script>Utils.showPreviousSiblingCSS();</script>
             <p>Abc 123 만세</p>
             <p>Abc 123 만세</p>
             <p>Abc 123 만세</p>

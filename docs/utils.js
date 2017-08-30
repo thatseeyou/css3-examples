@@ -35,35 +35,78 @@ var Utils = (function () {
         console.log("END   diff " + desc1 + " | " + desc2);
         console.log('');
     };
-    Utils.showPreviousSiblingCSS = function () {
+    Utils.showPreviousSiblingCSS = function (showVerbose) {
+        if (showVerbose === void 0) { showVerbose = false; }
         var currentContainer = document.currentScript.parentElement;
-        var styleElement = currentContainer.previousElementSibling;
-        var cssRules = styleElement.sheet.cssRules;
-        var rulesString = '';
-        for (var i = 0; i < cssRules.length; i++) {
-            var cssRule = cssRules[i];
-            if (cssRule.type == CSSRule.STYLE_RULE) {
-                var cssStyleRule = cssRule;
-                var selector = cssStyleRule.selectorText;
-                var styles = '';
-                for (var j = 0; j < cssStyleRule.style.length; j++) {
-                    var styleKey = cssStyleRule.style[j];
-                    var value = cssStyleRule.style.getPropertyValue(styleKey);
-                    if (cssStyleRule.style.length > 1)
-                        styles += "    " + styleKey + " : " + value + ";\n";
-                    else
-                        styles += styleKey + " : " + value + "; ";
-                }
-                if (cssStyleRule.style.length > 1)
-                    rulesString += selector + " {\n" + styles + "}\n";
-                else
-                    rulesString += selector + " { " + styles + "}\n";
-            }
-        }
+        var styleElement = document.currentScript.previousElementSibling;
         var cssBox = document.createElement("pre");
-        cssBox.innerText = rulesString;
-        cssBox.className = 'cssBox';
         currentContainer.insertBefore(cssBox, document.currentScript);
+        cssBox.className = 'cssBox';
+        updateCssBox(showVerbose, cssBox, styleElement);
+        function updateCssBox(showVerbose, cssBox, styleElement) {
+            var rulesString = getRulesString(showVerbose, styleElement);
+            cssBox.innerText = rulesString;
+            addButtons(cssBox);
+        }
+        function getRulesString(showVerbose, styleElement) {
+            var rulesString = '';
+            if (showVerbose) {
+                var cssRules = styleElement.sheet.cssRules;
+                for (var i = 0; i < cssRules.length; i++) {
+                    var cssRule = cssRules[i];
+                    if (cssRule.type == CSSRule.STYLE_RULE) {
+                        var cssStyleRule = cssRule;
+                        var selector = cssStyleRule.selectorText;
+                        var styles = '';
+                        for (var j = 0; j < cssStyleRule.style.length; j++) {
+                            var styleKey = cssStyleRule.style[j];
+                            var value = cssStyleRule.style.getPropertyValue(styleKey);
+                            if (cssStyleRule.style.length > 1)
+                                styles += "    " + styleKey + ": " + value + ";\n";
+                            else
+                                styles += styleKey + ": " + value + "; ";
+                        }
+                        if (cssStyleRule.style.length > 1)
+                            rulesString += selector + " {\n" + styles + "}\n";
+                        else
+                            rulesString += selector + " { " + styles + "}\n";
+                    }
+                }
+            }
+            else {
+                var textContent = styleElement.textContent;
+                // let leadingSpace = rulesString.match(/^\s+/);
+                var numFirstIndentation = textContent.search(/[^\s]+/);
+                if (numFirstIndentation < 0)
+                    numFirstIndentation = 0;
+                var lines = textContent.split('\n');
+                for (var _i = 0, lines_1 = lines; _i < lines_1.length; _i++) {
+                    var line = lines_1[_i];
+                    var numIndentation = line.search(/[^\s]+/);
+                    /* skip blank line */
+                    if (numIndentation < 0)
+                        continue;
+                    var trimLength = numIndentation > numFirstIndentation ? numFirstIndentation : numIndentation;
+                    rulesString += line.substr(trimLength) + '\n';
+                }
+                rulesString = rulesString.trim();
+            }
+            return rulesString;
+        }
+        function addButtons(container) {
+            var div = document.createElement('div');
+            var button = document.createElement('button');
+            div.className = 'showStyleControls';
+            button.className = 'scVerbose';
+            button.textContent = 'On/Off verbodse';
+            div.appendChild(button);
+            container.insertBefore(div, container.firstChild);
+            button.addEventListener('click', function () {
+                console.log(getRulesString(false, styleElement));
+                showVerbose = !showVerbose;
+                updateCssBox(showVerbose, cssBox, styleElement);
+            });
+        }
     };
     return Utils;
 }());

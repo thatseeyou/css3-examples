@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>white-space</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="utils.css" rel="stylesheet">
+        <script src="utils.js"></script>
+        <style>
+            .flex {
+                display:flex;
+            }
+            .flexitem {
+                flex: none;
+            }
+        </style>
+    </head>
+    <body>
+        <style>
+            .ex-background div {
+                width: 200px;
+                height: 200px;
+                border: 30px dashed pink;
+                margin: 10px;
+                background-color: royalblue;
+            }
+            .ex-background div:nth-of-type(1) {
+                box-sizing: content-box;
+                padding: 10px;
+            }
+            .ex-background div:nth-of-type(2) {
+                box-sizing: content-box;
+                padding: 0;
+            }
+            .ex-background div:nth-of-type(3) {
+                box-sizing: border-box;
+                padding: 10px;
+            }
+            .ex-background div:nth-of-type(4) {
+                box-sizing: border-box;
+                padding: 0;
+            }
+        </style>
+        <script>Utils.showPreviousSiblingCSS()</script>
+        <p>box-sizing의 기본값은 content-box이고 padding, border-width는 width, height 계산에서 제외된다.</p>
+        <div class="ex-background flex">
+            <div>content-box<br/>padding: 10px;</div>
+            <div>content-box<br/>padding: 0;</div>
+            <div>border-box<br/>padding: 10px;</div>
+            <div>border-box<br/>padding: 0;</div>
+        </div>
+
+        <style>
+            .ex-background-clip div {
+                box-sizing: border-box;
+                height: 200px;
+                width: 200px;
+                margin: 10px;
+                border: 20px dashed rgba(255,0,0,0.5);
+                padding: 20px;
+                background-color: royalblue;
+            }
+            .ex-background-clip div:nth-of-type(1) {
+                background-clip: border-box;
+            }
+            .ex-background-clip div:nth-of-type(2) {
+                background-clip: padding-box;
+            }
+            .ex-background-clip div:nth-of-type(3) {
+                background-clip: content-box;
+            }
+        </style>
+        <script>Utils.showPreviousSiblingCSS()</script>
+        <p>background-clip으로 background가 미치는 범위를 지정할 수 있다. </p>
+        <div class="ex-background-clip flex">
+            <div>border-box</div>
+            <div>padding-box</div>
+            <div>content-box</div>
+        </div>
+
+        <style>
+            .ex-background-origin div {
+                box-sizing: border-box;
+                height: 200px;
+                width: 200px;
+                margin: 10px;
+                border: 20px dashed rgba(255,0,0,0.5);
+                padding: 20px;
+                background-color: royalblue;
+                background-image: url('images/200.png');
+                background-size: 100% 100%;
+            }
+            .ex-background-origin div:nth-of-type(1) {
+                background-clip: border-box;
+                background-origin: border-box;
+                /* background-size: 200px 200px; */
+            }
+            .ex-background-origin div:nth-of-type(2) {
+                background-clip: border-box;
+                background-origin: padding-box;
+                /* background-size: 160px 160px; */
+            }
+            .ex-background-origin div:nth-of-type(3) {
+                background-clip: border-box;
+                background-origin: content-box;
+                /* background-size: 120px 120px; */
+            }
+            .ex-background-origin div:nth-of-type(4) {
+                background-clip: content-box;
+                background-origin: border-box;
+                /* background-size: 200px 200px; */
+            }
+            .ex-background-origin div:nth-of-type(5) {
+                background-clip: content-box;
+                background-origin: padding-box;
+                /* background-size: 160px 160px; */
+            }
+            .ex-background-origin div:nth-of-type(6) {
+                background-clip: content-box;
+                background-origin: content-box;
+                /* background-size: 120px 120px; */
+            }
+        </style>
+        <script>Utils.showPreviousSiblingCSS()</script>
+        <p>background-origin은 background image의 시작 위치를 지정하게 한다. 디폴트는 padding-box이다. background-origin을 기준으로 표시하고  background-clip에 의해서 잘리는 것을 알 수 있다.</p>
+        <div class="ex-background-origin flex">
+            <div>border-box</div>
+            <div>padding-box</div>
+            <div>content-box</div>
+            <div>border-box</div>
+            <div>padding-box</div>
+            <div>content-box</div>
+        </div>
+
+        <style>
+            .ex-percentage {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: 12px;
+                line-height: 1.2;
+            }
+            .ex-percentage > div {
+                width: 200px;
+                height: 140px;
+                margin: 10px;
+                padding: 10px;
+                border: 20px dashed rgba(255,0,0,0.5);
+                background-color: royalblue;
+                /* background-clip: content-box; */
+            }
+            .ex-percentage > div:nth-of-type(1) {
+                box-sizing: border-box;
+            }
+            .ex-percentage > div:nth-of-type(2) {
+                box-sizing: content-box;
+            }
+            .ex-percentage > div > div {
+                border: 1px solid white;
+                box-sizing: border-box;
+                background-color: pink;
+                background-clip: content-box;
+                padding: 10%;
+                margin-left: 10%;
+            }
+        </style>
+        <script>Utils.showPreviousSiblingCSS()</script>
+        <p>Containing box의 width가 기준일 경우에 containing box의 box-sizing은 어떤 영향을 미치는가? Containing box의 box-sizing이 border-box인 경우에는 width에서 border-width와 padding을 제외한 값이 기준이 된다.</p>
+        <div class="ex-percentage flex">
+            <div>border-box<br>width: 200px;<div>padding: 10% -> 14px;</div></div>
+            <div>content-box<br>width: 200px;<div>padding: 10% -> 20px;</div></div>
+        </div>
+
+        <style>
+            .ex-nested-margin div {
+                box-sizing: border-box;
+                width: 100px;
+                height: 100px;
+                margin: 10px;
+                /* border: 1px solid black; */
+                background-color: rebeccapurple;
+            }
+            .ex-nested-margin div > div {
+                background-color: greenyellow;
+                margin: 20px;
+                width: 40px;
+                height: 40px;
+            }
+            .ex-nested-margin div:nth-of-type(3) {
+                border: 10px solid red;
+            }
+        </style>
+        <script>Utils.showPreviousSiblingCSS()</script>
+        <p>Nested element의 margin은 containing box에 border, padding이 없으면 collapse 된다. top, bottom인 경우에만 해당한다. </p>
+        <div class="ex-nested-margin">
+            <div>
+            </div>
+            <div>
+                <div>
+                </div>
+            </div>
+            <div>
+                <div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .ex-nested-margin2 div {
+                box-sizing: border-box;
+                /* border: 1px solid black; */
+            }
+            .ex-nested-margin2 div:nth-of-type(1) {
+                background-color: rebeccapurple;
+                width: 200px;
+                height: 20px;
+                margin: 10px;
+            }
+            .ex-nested-margin2 div:nth-of-type(2) {
+                background-color: royalblue;
+                margin: 10px;
+            }
+            .ex-nested-margin2 div:nth-of-type(2) > h2 {
+                background-color: greenyellow;
+                margin: 20px;
+            }
+            .ex-nested-margin2 div:nth-of-type(3) {
+                padding: 1px;
+                background-color: royalblue;
+                margin: 10px;
+            }
+            .ex-nested-margin2 div:nth-of-type(3) > h2 {
+                background-color: greenyellow;
+                margin: 20px;
+            }
+        </style>
+        <script>Utils.showPreviousSiblingCSS()</script>
+        <p>Padding을 추가하면 collapse 되지 않는다.</p>
+        <div class="ex-nested-margin2">
+            <div>
+            </div>
+            <div>
+                <h2>TITLE</h2>
+            </div>
+            <div>
+                <h2>TITLE</h2>
+            </div>
+        </div>
+
+
+    </body>
+</html>
