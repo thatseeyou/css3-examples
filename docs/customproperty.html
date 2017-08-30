@@ -4,24 +4,36 @@
         <title></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="customproperty/variables.css" rel="stylesheet">
-        <link href="customproperty/style.css" rel="stylesheet">
+        <link href="utils.css" rel="stylesheet">
+        <script src="utils.js"></script>
+    </head>
+    <body>
         <style>
+            :root {
+                --red: #f00;
+                --green: #0f0;
+                --blue: #00f;
+            }
             .module {
                 --red: #800;
                 --green: #080;
                 --blue: #008;
             }
+            .red { background-color: var(--red); }
+            .green { background-color: var(--green); }
+            .blue { background-color: var(--blue); }
         </style>
-    </head>
-    <body>
-        <div class="red">red</div>
-        <div class="green">green</div>
-        <div class="blue">blue</div>
-        <div class="module">
-            <div class="red">red in module</div>
-            <div class="green">green in module</div>
-            <div class="blue">blue in module</div>
+        <script>Utils.showPreviousSiblingCSS();</script>
+        <p>--VARNAME으로 속성을 생성하고 var(--VARNAME)를 이용해서 참조할 수 있다. 다른 속성과 마찬가지로 cascading된다. </p>
         <div>
+            <div class="red">red</div>
+            <div class="green">green</div>
+            <div class="blue">blue</div>
+            <div class="module">
+                <div class="red">red in module</div>
+                <div class="green">green in module</div>
+                <div class="blue">blue in module</div>
+            </div>
+        </div>
     </body>
 </html>
