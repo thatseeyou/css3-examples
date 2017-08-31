@@ -4,8 +4,13 @@
         <title>white-space</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="vendor/prism-default.css" rel="stylesheet">
+        <script src="vendor/prism.min.js"  data-manual></script>
         <link href="utils.css" rel="stylesheet">
         <script src="utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
         <style>
             p { 
                 margin-top: 0.1em;
@@ -15,54 +20,44 @@
             }
         </style>
         <script>
-            function fill() {
-                var currentContainer = document.currentScript.parentElement;
-                var p1 = document.createElement('p');
-                p1.innerHTML = '1. ABC\t123\t<strong>동해물</strong>과       <em>백두산</em>이 마르고 닳도록 하느님이 보우하사 우리나라 만세\n2.무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.';
+            function fills() {
+                var divs = document.getElementsByClassName("text-fill");
 
-                currentContainer.appendChild(p1);
+                for (var i=0;i < divs.length; i++) {
+                    var div = divs[i];
+
+                    div.innerHTML='<p>1. ABC\t123\t<strong>동해물</strong>과       <em>백두산</em>이 마르고 닳도록 하느님이 보우하사 우리나라 만세\n2.무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세.</p>';
+                }
             }
         </script>
     </head>
     <body>
-        <style>
-            .ex-pre p { white-space: pre; }
+        <style class="example">
+            #ex-pre p { white-space: pre; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-pre">
-            <script>fill();</script>
-        </div>
+        <div id="ex-pre" class="text-fill"></div> 
 
-        <style>
-            .ex-pre-line p { white-space: pre-line; }
+        <style class="example">
+            #ex-pre-line p { white-space: pre-line; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-pre-line">
-            <script>fill();</script>
-        </div>
+        <div id="ex-pre-line" class="text-fill"></div>
         
-        <style>
-            .ex-pre-wrap p { white-space: pre-wrap; }
+        <style class="example">
+            #ex-pre-wrap p { white-space: pre-wrap; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-pre-wrap">
-            <script>fill();</script>
-        </div>
+        <div id="ex-pre-wrap" class="text-fill"></div>
 
-        <style>
-            .ex-wrap p { white-space: nowrap; }
+        <style class="example">
+            #ex-wrap p { white-space: nowrap; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-wrap">
-            <script>fill();</script>
-        </div>
+        <div id="ex-wrap" class="text-fill"></div> 
 
-        <style>
-            .ex-normal p { white-space: normal; }
+        <style class="example">
+            #ex-normal p { white-space: normal; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-normal">
-            <script>fill();</script>
-        </div>
+        <div id="ex-normal" class="text-fill"></div>
+
+        <!-- DOMContentLoaded 이벤트가 발생하기 전에 fillss()를 호출해서 HTML을 준비해야 한다. -->
+        <script>fills();</script>
     </body>
 </html>

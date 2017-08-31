@@ -19,3 +19,13 @@ line-height의 기본값은 정확하게 1.2는 아니다. 문서와 실제 결�
 명시적으로 line-height를 1.2로 지정하는 것은 기본값인 normal로 유지하는 것과는 엄염히 다르다. 특히 float로 box를 나열할 경우에 문제가 될 수 있다.
 
 지금까지의 설명은 vertical-align의 기본값인 baseline에 대한 설명이다. inline 요소에 text가 존재하는 경우에 해당한다. Text가 존재하지 않는 inline-block가 있다면 bottom이 baseline이 되기 때문에 최종 line-height 계산이 위의 설명과 다를 수 있다. 
+
+# 예제 작성 요령
+\<style\>, \<p\>, \<div\> 순서로 작성해야 정상적으로 소스가 표시된다.
+
+# Prism
+CSS와 html을 페이지에 표시하기 위해서 [Prism](http://prismjs.com)을 사용하고 있다.
+
+사용한 플러그인 2가지는 다음과 같다.
+* [Normalize Whitespace](http://prismjs.com/plugins/normalize-whitespace/) : 불필요한 공백을 제거하기 위해서 사용
+* [Toolbar](http://prismjs.com/plugins/toolbar/) : 버튼을 추가해서 뷰가 변경되도록 처리

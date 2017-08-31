@@ -4,8 +4,13 @@
         <title>Fonts</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="vendor/prism-default.css" rel="stylesheet">
+        <script src="vendor/prism.min.js"  data-manual></script>
         <link href="utils.css" rel="stylesheet">
         <script src="utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
         <style>
             p { 
                 font-size: 1.4em;
@@ -14,47 +19,49 @@
             }
         </style>
         <script>
-            function fill() {
-                var currentContainer = document.currentScript.parentElement;
-                var p1 = document.createElement('p');
-                p1.innerHTML = 'ABC 123 <strong>동해물</strong>과 <em>백두산</em>이 마르고 닳도록 하느님이 보우하사 우리나라 만세';
-                var p2 = document.createElement('p');
-                p2.innerHTML = 'God blessed the <strong>East Sea</strong> and <em>Mt.</em>';
+            function fills() {
+                var divs = document.getElementsByClassName("text-fill");
 
-                currentContainer.appendChild(p1);
-                currentContainer.appendChild(p2);
+                for (var i=0;i < divs.length; i++) {
+                    var div = divs[i];
+
+                    div.innerHTML=`
+                    <p>ABC 123 <strong>동해물</strong>과 <em>백두산</em>이 마르고 닳도록 하느님이 보우하사 우리나라 만세</p>
+                    <p>God blessed the <strong>East Sea</strong> and <em>Mt.</em></p>`;
+                }
             }
         </script>
     </head>
     <body>
-        <style>
-            .ex-1 { font-family: 'Times New Roman', Times, serif; }
+        <style class="example">
+            #ex-1 { font-family: 'Times New Roman', Times, serif; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
-        <div class="ex-1"><script>fill();</script></div>
+        <p>영문 폰트와 한글 폰트는 유니코드 범위가 다르기 때문에 영문은 지정한 폰트가 선택이 되어도 한글은 브라우저 디폴트로 빠질 수 있다. Firefox는 개발자 도구에서 현재 적용된 폰트를 확인할 수 있다.</p>
+        <div id="ex-1" class="text-fill"></div>
 
-        <style>
-            .ex-2 { font-family: NanumSquare, Dotum, "돋움", Helvetica, AppleSDGothicNeo, sans-serif; }
+        <style class="example">
+            #ex-2 { font-family: NanumSquare, Dotum, "돋움", Helvetica, AppleSDGothicNeo, sans-serif; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
-        <div class="ex-2"><script>fill();</script></div>
+        <div id="ex-2" class="text-fill"></div>
 
-        <style>
-            .ex-3 { font-family: "Courier New",Courier,monospace; }
+        <style class="example">
+            #ex-3 { font-family: "Courier New",Courier,monospace; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
-        <div class="ex-3"><script>fill();</script></div>
+        <div id="ex-3" class="text-fill"></div>
 
-        <style>
-            .ex-4 { font-family: "Courier New",AppleMyungjo,Courier,monospace; }
+        <style class="example">
+            #ex-4 { font-family: "Courier New",AppleMyungjo,Courier,monospace; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
-        <div class="ex-4"><script>fill();</script></div>
+        <p>영문은 Courier New를 사용하고 한글은 AppleMyunjo를 사용한다. 공백도 영어 폰트를 사용하기 때문에 전체 폭에 영향을 미친다.</p>
+        <div id="ex-4" class="text-fill"></div>
 
-        <style>
-            .ex-5 { font-family: AppleMyungjo,"Courier New",Courier,monospace; }
+        <style class="example">
+            #ex-5 { font-family: AppleMyungjo,"Courier New",Courier,monospace; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
-        <div class="ex-5"><script>fill();</script></div>
+        <p>한글 폰트는 영어 알파펫을 포함하기 때문에 AppleMyungjo 하나만 사용하게 된다.</p>
+        <div id="ex-5" class="text-fill"></div>
+
+        <!-- DOMContentLoaded 이벤트가 발생하기 전에 fillss()를 호출해서 HTML을 준비해야 한다. -->
+        <script>fills();</script>
     </body>
 </html>

@@ -4,20 +4,23 @@
         <title>white-space</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="vendor/prism-default.css" rel="stylesheet">
+        <script src="vendor/prism.min.js"  data-manual></script>
         <link href="utils.css" rel="stylesheet">
         <script src="utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
         <style>
             .flex {
                 display:flex;
-            }
-            .flexitem {
-                flex: none;
+                flex-wrap: wrap;
             }
         </style>
     </head>
     <body>
-        <style>
-            .ex-border-radius div {
+        <style class="example">
+            #ex-border-radius div {
                 box-sizing: border-box;
                 height: 150px;
                 width: 200px;
@@ -27,26 +30,25 @@
                 background-color: royalblue;
                 border-radius: 40%;
             }
-            .ex-border-radius div:nth-of-type(1) {
+            #ex-border-radius div:nth-of-type(1) {
                 background-clip: border-box;
             }
-            .ex-border-radius div:nth-of-type(2) {
+            #ex-border-radius div:nth-of-type(2) {
                 background-clip: padding-box;
             }
-            .ex-border-radius div:nth-of-type(3) {
+            #ex-border-radius div:nth-of-type(3) {
                 background-clip: content-box;
             }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
         <p>border-radius는 content 영역의 background까지 영향을 준다.</p>
-        <div class="ex-border-radius flex">
+        <div id="ex-border-radius" class="flex">
             <div>border-box</div>
             <div>padding-box</div>
             <div>content-box</div>
         </div>
 
-        <style>
-            .ex-absolute-relative div {
+        <style class="example">
+            #ex-absolute-relative div {
                 height: 100px;
                 width: 200px;
                 margin: 10px;
@@ -54,27 +56,26 @@
                 background-color: royalblue;
                 padding: 30px;
             }
-            .ex-absolute-relative div:nth-of-type(1) {
+            #ex-absolute-relative div:nth-of-type(1) {
                 border-radius: 9999px;
             }
-            .ex-absolute-relative div:nth-of-type(2) {
+            #ex-absolute-relative div:nth-of-type(2) {
                 border-radius: 100%;
             }
-            .ex-absolute-relative div:nth-of-type(3) {
+            #ex-absolute-relative div:nth-of-type(3) {
                 border-radius: calc(50% - 10px);
             }
-            .ex-absolute-relative div:nth-of-type(4) {
+            #ex-absolute-relative div:nth-of-type(4) {
                 width: 50px;
                 border-radius: 9999px;
             }
-            .ex-absolute-relative div:nth-of-type(5) {
+            #ex-absolute-relative div:nth-of-type(5) {
                 width: 50px;
                 border-radius: 100%;
             }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
         <p>%의 기준은 수평, 수직이 다르다. 절대값은 기준이 같기 때문에 수평, 수직 반경이 같게 된다. 큰 값을 주면 50%를 넘지 못한다.</p>
-        <div class="ex-absolute-relative flex">
+        <div id="ex-absolute-relative" class="flex">
             <div>9999px</div>
             <div>100%</div>
             <div>calc()</div>
@@ -82,8 +83,8 @@
             <div>100%</div>
         </div>
 
-        <style>
-            .ex-border-inline div {
+        <style class="example">
+            #ex-border-inline div {
                 font-family: Arial, Helvetica, sans-serif;
                 font-size: 40px; 
                 line-height: 1.2;
@@ -91,51 +92,50 @@
                 padding: 10px;
                 background-color: royalblue;
             }
-            .ex-border-inline em, .ex-border-inline strong {
+            #ex-border-inline em, #ex-border-inline strong {
                 font-style: normal;
                 font-weight: normal;
             }
-            .ex-border-inline div:nth-of-type(1) strong {
+            #ex-border-inline div:nth-of-type(1) strong {
                 background-color: pink;
             }
-            .ex-border-inline div:nth-of-type(1) em {
+            #ex-border-inline div:nth-of-type(1) em {
                 background-color: pink;
                 border-radius: 50%;
             }
-            .ex-border-inline div:nth-of-type(2) strong {
+            #ex-border-inline div:nth-of-type(2) strong {
                 background-image: url(images/200.png);
                 background-size: 100%;
                 background-color: pink;
             }
-            .ex-border-inline div:nth-of-type(2) em {
+            #ex-border-inline div:nth-of-type(2) em {
                 background-image: url(images/200.png);
                 background-size: 100%;
                 background-color: pink;
                 background-position: bottom;
                 border-radius: 20%;
             }
-            .ex-border-inline div:nth-of-type(3) strong {
+            #ex-border-inline div:nth-of-type(3) strong {
                 display: inline-block;
                 padding: 0.2em;
                 background-color: pink;
             }
-            .ex-border-inline div:nth-of-type(3) em {
+            #ex-border-inline div:nth-of-type(3) em {
                 display: inline-block;
                 padding: 0.2em;
                 background-color: pink;
                 border-radius: 30px;
             }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
         <p>border-radius는 inline 요소에도 영향을 준다.</p>
-        <div class="ex-border-inline">
+        <div id="ex-border-inline">
             <div><strong>동해물</strong>과 <em>백두산</em>이 마르고 닳도록</div>
             <div><strong>동해물</strong>과 <em>백두산</em>이 마르고 닳도록</div>
             <div><strong>동해물</strong>과 <em>백두산</em>이 마르고 닳도록</div>
         </div>
 
-        <style>
-            .ex-border-color div {
+        <style class="example">
+            #ex-border-color div {
                 box-sizing: border-box;
                 height: 200px;
                 width: 100px;
@@ -149,27 +149,26 @@
                 background-color: royalblue;
                 background-size: 30px 30px;
             }
-            .ex-border-color div:nth-of-type(1) {
+            #ex-border-color div:nth-of-type(1) {
                 border-width: 10px;
             }
-            .ex-border-color div:nth-of-type(2) {
+            #ex-border-color div:nth-of-type(2) {
                 border-width: 100px 20px;
             }
-            .ex-border-color div:nth-of-type(3) {
+            #ex-border-color div:nth-of-type(3) {
                 padding: 20px;
                 border-width: 100px 20px;
             }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
         <p>border는 4곳을 각각 다르게 지정할 수 있다. border는 padding이나 content 영역을 침범할 수 없다. 그럴 경우에는 width나 height가 늘어나게 된다.</p>
-        <div class="ex-border-color flex">
+        <div id="ex-border-color" class="flex">
             <div></div>
             <div></div>
             <div></div>
         </div>
 
-        <style>
-            .ex-border-image div {
+        <style class="example">
+            #ex-border-image div {
                 box-sizing: border-box;
                 width: 200px;
                 height: 200px;
@@ -179,20 +178,19 @@
                 background-color: royalblue;
                 background-size: 30px 30px;
             }
-            .ex-border-image div:nth-of-type(2) {
+            #ex-border-image div:nth-of-type(2) {
                 border-image-source : url(images/200.png);
                 border-image-slice : 100% 100% 100% 100%;
                 border-image-width : 1 1 1 1;
                 border-image-outset : 0 0 0 0;
                 border-image-repeat : stretch stretch;
             }
-            .ex-border-image div:nth-of-type(2) {
+            #ex-border-image div:nth-of-type(2) {
             }
-            .ex-border-image div:nth-of-type(3) {
+            #ex-border-image div:nth-of-type(3) {
             }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-border-image flex">
+        <div id="ex-border-image" class="flex">
             <div></div>
             <div></div>
             <div></div>

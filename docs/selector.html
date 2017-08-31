@@ -4,146 +4,136 @@
         <title>Selectors</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="vendor/prism-default.css" rel="stylesheet">
+        <script src="vendor/prism.min.js"  data-manual></script>
         <link href="utils.css" rel="stylesheet">
         <script src="utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
         <style>
             .block    { display: block; }
-            h2        { margin-bottom: 0; }
-            .box30    { width: 30px; height: 30px; }
-            .box100   { width: 100px; height: 100px; }
             .width200 { width: 200px; }
         </style>
     </head>
     <body>
         <!-- the order of declarations matters :link > :visited > :hover > :active -->
-        <style>
-            .ex-order-1 a:link  { background-color: gold; }
-            .ex-order-1 a:hover { background-color: yellowgreen; }
+        <style class="example">
+            #ex-order > a:nth-of-type(1):link  { background-color: gold; }
+            #ex-order > a:nth-of-type(1):hover { background-color: yellowgreen; }
+            #ex-order > a:nth-of-type(2):hover { background-color: yellowgreen; }
+            #ex-order > a:nth-of-type(2):link  { background-color: gold; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-order-1">
-            <h2>:link > :hover</h2>
+        <p>:link > :visited > :hover > :active 순서로 정의해야 한다. :link가 나중에 오면 다른 pseudo class 설정을 무력화시키게 된다. (firefox는 상관없이 동작한다.)</p>
+        <div id="ex-order">
+            <a class="block" href="http://zdnet.co.kr">ZDNet Korean</a>
             <a class="block" href="http://zdnet.co.kr">ZDNet Korean</a>
         </div>
 
-        <style>
-            .ex-order-2 a:hover { background-color: yellowgreen; }
-            .ex-order-2 a:link  { background-color: gold; }
-        </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-order-2">
-            <h2>:hover > :link (Chrome and Firefox react differently)</h2>
-            <a class="block" href="http://zdnet.co.kr">ZDNet Korean</a>
-        </div>
-
-        <style>
-            .ex-hover > div             { background-color: yellow; }
-            .ex-hover > div > div       { background-color: green; }
-            .ex-hover > div > div > div { background-color: pink; }
-            .ex-hover div:hover         { background-color: red; }
-            /* .ex-hover span              { display: block; } */
-            .ex-hover > span, 
-            .ex-hover > span > span,
-            .ex-hover > span > span > span,
-            .ex-hover > span > span > span > span,
-            .ex-hover > span > span > span > span > span 
+        <style class="example">
+            #ex-hover > div             { background-color: yellow; }
+            #ex-hover > div > div       { background-color: green; }
+            #ex-hover > div > div > div { background-color: pink; }
+            #ex-hover div:hover         { background-color: red; }
+            /* #ex-hover span              { display: block; } */
+            #ex-hover > span, 
+            #ex-hover > span > span,
+            #ex-hover > span > span > span,
+            #ex-hover > span > span > span > span,
+            #ex-hover > span > span > span > span > span 
                                         { background-color: yellow; }
-            .ex-hover span:hover        { background-color: red; }
+            #ex-hover span:hover        { background-color: red; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-hover">
-            <h2>make :hover bubbles up only to ascendants (compare with <a href="https://css-tricks.com/star-ratings/">https://css-tricks.com/star-ratings/</a>)</h2>
-            <div>grand parent<div>parent<div>child</div></div></div>
+        <p>:hover 이벤트는 해당 요소의 부모 및 조상까지 전달된다. (compare with <a href="https://css-tricks.com/star-ratings/">https://css-tricks.com/star-ratings/</a>)</p>
+        <div id="ex-hover">
+            <div>parent
+                <div>child
+                    <div>grand child</div>
+                </div>
+            </div>
             <span>⭐️<span>⭐️<span>⭐️<span>⭐️<span>⭐️</span></span></span></span></span>
         </div>
 
-        <style>
-            .ex-focus > div             { background-color: yellow; }
-            .ex-focus > div > div       { background-color: green; }
-            .ex-focus > div > div > div { background-color: pink; }
-            .ex-focus :focus            { background-color: red; }
+        <style class="example">
+            #ex-focus > div             { background-color: yellow; }
+            #ex-focus > div > div       { background-color: green; }
+            #ex-focus > div > div > div { background-color: pink; }
+            #ex-focus :focus            { background-color: red; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-focus">
-            <h2>:focus does not bubble up to ascendants</h2>
+        <p>:hover와 달리 :focus는 부모 및 조상까지 전달되지 않는다.</p>
+        <div id="ex-focus">
             <div>grand parent<div>parent<input value="child"></div></div>
         </div>
 
-        <style>
-            .ex-empty :empty         { background-color: orange; }
-            .ex-empty :empty::before { content: "empty"; color: red; }
+        <style class="example">
+            #ex-empty :empty         { background-color: orange; }
+            #ex-empty :empty::before { content: "empty"; color: red; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-empty">
-            <h2>:empty can find empty elements</h2>
+        <p>:empty can find empty elements</p>
+        <div id="ex-empty">
             <div></div>
             <div> </div>
             <div>Only text</div>
             <div><span>child element</span></div>
         </div>
 
-        <style>
-            .ex-first-letter ::first-letter { font-size: 150%; color: purple; }
-            .ex-first-letter .before::before { content: "정말 "; }
+        <style class="example">
+            #ex-first-letter ::first-letter { font-size: 150%; color: purple; }
+            #ex-first-letter .before::before { content: "정말 "; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-first-letter">
-            <h2>::first-letter</h2>
+        <p>::first-letter는 기호는 한 개로 인정하지 않고 ::before로 생긴 content까지 대상으로 한다.</p>
+        <div id="ex-first-letter">
             <div>안녕하세요?</div>
             <div>"안녕하세요?"</div>
             <div class="before">안녕하세요?</div>
         </div>
 
-        <style>
-            .ex-first-line ::first-line { color: purple; }
+        <style class="example">
+            #ex-first-line ::first-line { color: purple; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-first-line">
-            <h2>::first-line</h2>
+        <p>::first-line은 문단의 첫 번째 줄을 가리킨다.</p>
+        <div id="ex-first-line">
             <div>first line<br>second line</div>
             <div class="width200">로렘 입섬, 어쩌구 저쩌구, 날이 참 더구나. </div>
         </div>
 
-        <style>
-            .ex-selection .hidden-answer { color: white; background-color: white; } 
-            .ex-selection .answer::selection,
-            .ex-selection .answer ::selection      { color: black; } 
-            .ex-selection .answer::-moz-selection,
-            .ex-selection .answer ::-moz-selection { color: black; } 
+        <style class="example">
+            #ex-selection .hidden-answer { color: white; background-color: white; } 
+            #ex-selection .answer::selection,
+            #ex-selection .answer ::selection      { color: black; } 
+            #ex-selection .answer::-moz-selection,
+            #ex-selection .answer ::-moz-selection { color: black; } 
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-selection">
-            <h2>::selection (firefox: ::-moz-selection)</h2>
+        <p>::selection (firefox: ::-moz-selection)</p>
+        <div id="ex-selection">
             <div>Q) Who are you? (drag answer to select)</div>
             <div class="answer">A) <span class="hidden-answer">I'm you.</span></div>
         </div>
 
-        <style>
-            .ex-attribute a { display: block; }
-            .ex-attribute [href*="github"] { background-color: green; }
-            .ex-attribute [href] { background-color: red; }
-            .ex-attribute [href*="stack"] { background-color: green; }
+        <style class="example">
+            #ex-attribute a { display: block; }
+            #ex-attribute [href*="github"] { background-color: green; }
+            #ex-attribute [href] { background-color: red; }
+            #ex-attribute [href*="stack"] { background-color: green; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-attribute">
-            <h2>attribute selectors (order matters)</h2>
+        <p>attribute selector는 선언 순서에 주의해야 한다. href와 href*=는 동등한 우선 순위를 갖기 때문에 href*=github는 무시된다. </p>
+        <div id="ex-attribute">
             <a>no href</a>
             <a href="https://github.com">github</a>
             <a href="https://stackoverflow.com">stackoverflow</a>
         </div>
 
-        <style>
-            .ex-child>div { margin-bottom: 10px; }
-            .ex-child>div:nth-of-type(1) :first-child::after          { content: " (fist-child)"; color: blue;}
-            .ex-child>div:nth-of-type(2) :first-of-type::after        { content: " (first-of-type)"; color: green; }
-            .ex-child>div:nth-of-type(3) article:first-of-type::after { content: " (article:first-of-type)"; color: green;}
-            .ex-child>div:nth-of-type(4) :last-child::after           { content: " (last-child)"; color: blue;}
-            .ex-child>div:nth-of-type(5) :nth-child(odd)::after       { content: " (nth-child(odd))"; color: blue;}
-            .ex-child>div:nth-of-type(6) :nth-of-type(odd)::after     { content: " (nth-of-type(odd))"; color: green;}
+        <style class="example">
+            #ex-child>div { margin-bottom: 10px; }
+            #ex-child>div:nth-of-type(1) :first-child::after          { content: " (fist-child)"; color: blue;}
+            #ex-child>div:nth-of-type(2) :first-of-type::after        { content: " (first-of-type)"; color: green; }
+            #ex-child>div:nth-of-type(3) article:first-of-type::after { content: " (article:first-of-type)"; color: green;}
+            #ex-child>div:nth-of-type(4) :last-child::after           { content: " (last-child)"; color: blue;}
+            #ex-child>div:nth-of-type(5) :nth-child(odd)::after       { content: " (nth-child(odd))"; color: blue;}
+            #ex-child>div:nth-of-type(6) :nth-of-type(odd)::after     { content: " (nth-of-type(odd))"; color: green;}
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-child">
-            <h2>child selectors</h2>
+        <p>child selectors</p>
+        <div id="ex-child">
             <div>
                 <div>div1</div>
                 <article>article1</article>
@@ -188,25 +178,23 @@
             </div>
         </div>
 
-        <style>
-            .ex-range input:in-range { color: blue; font-size: 2em;}
-            .ex-range input:out-of-range { color: red; font-size: 5em;}
+        <style class="example">
+            #ex-range input:in-range { color: blue; font-size: 2em;}
+            #ex-range input:out-of-range { color: red; font-size: 5em;}
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-range">
-            <h2>:in-range, :out-of-range</h2>
+        <p>:in-range, :out-of-range</p>
+        <div id="ex-range">
             <input class="width200" type="number" min="1" max="10" placeholder="in-range: 1 to 10">
         </div>
 
-        <style>
-            .ex-sibling div ~ div::after { content: " (div ~ div)"; color: blue;}
-            .ex-sibling .title + div { font-size: 1.5em;}
-            .ex-sibling .title + div + div { font-size: 2.0em;}
-            .ex-sibling .title + div + div:hover { background-color: orange;}
+        <style class="example">
+            #ex-sibling div ~ div::after { content: " (div ~ div)"; color: blue;}
+            #ex-sibling .title + div { font-size: 1.5em;}
+            #ex-sibling .title + div + div { font-size: 2.0em;}
+            #ex-sibling .title + div + div:hover { background-color: orange;}
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-sibling">
-            <h2>sibling selectors (+, ~)</h2>
+        <p>sibling selectors (+, ~)</p>
+        <div id="ex-sibling">
             <div>aaa</div>
             <div>bbb</div>
             <div class="title">title</div>
@@ -214,26 +202,24 @@
             <div>ccc</div>
         </div>
 
-        <style>
-            .ex-not div:not(:first-of-type)::after { content: " (div:not(:first-of-type)::after)"; color: blue;}
-            .ex-not div:not(.second)               { background-color: yellow; }
+        <style class="example">
+            #ex-not div:not(:first-of-type)::after { content: " (div:not(:first-of-type)::after)"; color: blue;}
+            #ex-not div:not(.second)               { background-color: yellow; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-not">
-            <h2>:not() selector</h2>
+        <p>:not() selector</p>
+        <div id="ex-not">
             <div>first</div>
             <div class="second">second</div>
             <div>third</div>
         </div>
 
-        <style>
-            .ex-table table > tr         { color: yellow; }
-            .ex-table table > tbody > tr { color: red; }
-            .ex-table table tr           { background-color: green; }
+        <style class="example">
+            #ex-table table > tr         { color: yellow; }
+            #ex-table table > tbody > tr { color: red; }
+            #ex-table table tr           { background-color: green; }
         </style>
-        <script>Utils.showPreviousSiblingCSS()</script>
-        <div class="ex-table">
-            <h2>tbody inserted automatically</h2>
+        <p>tbody가 없는 경우에는 자동으로 tbody를 생성한다. 원래 파일을 확인해 보면 차이를 확인할 수 있다. table > tr selector는 무시된다.<p>
+        <div id="ex-table">
             <table>
                 <tr>
                     <td>11</td><td>12</td>

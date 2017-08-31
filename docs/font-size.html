@@ -4,8 +4,13 @@
         <title>Fonts</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="vendor/prism-default.css" rel="stylesheet">
+        <script src="vendor/prism.min.js"  data-manual></script>
         <link href="utils.css" rel="stylesheet">
         <script src="utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
         <style>
             p { 
                 margin-top: 0.1em;
@@ -14,69 +19,64 @@
         </style>
     </head>
     <body>
-        <style>
+        <style class="example">
             body { font-size: 16px; }
-            .ex-em p:nth-of-type(1) { font-size: 2em; }
-            .ex-em p:nth-of-type(1) span { font-size: 0.5em; }
-            .ex-em p:nth-of-type(2) { font-size: 200%; }
-            .ex-em p:nth-of-type(2) span { font-size: 50%; }
-            .ex-em p:nth-of-type(3) { font-size: 32px; }
-            .ex-em p:nth-of-type(3) > span { font-size: 16px; }
-            .ex-em p:nth-of-type(3) > span > span { font-size: 8.5px; }
+            #ex-em p:nth-of-type(1) { font-size: 2em; }
+            #ex-em p:nth-of-type(1) span { font-size: 0.5em; }
+            #ex-em p:nth-of-type(2) { font-size: 200%; }
+            #ex-em p:nth-of-type(2) span { font-size: 50%; }
+            #ex-em p:nth-of-type(3) { font-size: 32px; }
+            #ex-em p:nth-of-type(3) > span { font-size: 16px; }
+            #ex-em p:nth-of-type(3) > span > span { font-size: 8.5px; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
         <p>em, %는 부모 font-size가 기준이 된다. font-size가 아닌 다른 속성의 값으로 em을 사용하면 자신의 font-size가 기준이 된다.</p>
-        <div class="ex-em">
+        <div id="ex-em">
             <p>Parent<span>Child<span>Grand Child</span></span></p>
             <p>Parent<span>Child<span>Grand Child</span></span></p>
             <p>Parent<span>Child<span>Grand Child</span></span></p>
         </div>
 
-        <style>
+        <style class="example">
             html { font-size: 10px; }
-            .ex-rem p { font-size: 3.2rem; }
-            .ex-rem p > span { font-size: 1.6rem; }
-            .ex-rem p > span > span { font-size: 0.85rem; }
+            #ex-rem p { font-size: 3.2rem; }
+            #ex-rem p > span { font-size: 1.6rem; }
+            #ex-rem p > span > span { font-size: 0.85rem; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
         <p>rem은 html의 font-size를 기준으로 하기 때문에 부모의 font-size를 고려하지 않아도 된다.</p>
-        <div class="ex-rem">
+        <div id="ex-rem">
             <p>Parent<span>Child<span>Grand Child</span></span></p>
         </div>
 
-        <style>
-            .ex-4 p { font-size: xx-large; }
-            .ex-4 p > span { font-size: medium; }
-            .ex-4 p > span > span { font-size: xx-small; }
+        <style class="example">
+            #ex-4 p { font-size: xx-large; }
+            #ex-4 p > span { font-size: medium; }
+            #ex-4 p > span > span { font-size: xx-small; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
         <p>xx-large, medium, xx-smale과 같은 keyword는 절대값이기 때문에 부모 font-size의 영향을 받지 않는다.</p>
-        <div class="ex-4">
+        <div id="ex-4">
             <p>Parent<span>Child<span>Grand Child</span></span></p>
         </div>
 
-        <style>
-            .ex-transform p > span:nth-of-type(1) { text-transform: uppercase; }
-            .ex-transform p > span:nth-of-type(2) { text-transform: lowercase; }
-            .ex-transform p > span:nth-of-type(3) { font-variant: small-caps; }
+        <style class="example">
+            #ex-transform p > span:nth-of-type(1) { text-transform: uppercase; }
+            #ex-transform p > span:nth-of-type(2) { text-transform: lowercase; }
+            #ex-transform p > span:nth-of-type(3) { font-variant: small-caps; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
-        <div class="ex-transform">
+        <div id="ex-transform">
             <p><span>abc 123 만세</span> <span>ABC 123 만세</span> <span>Abc 123 만세</span></p>
         </div>
 
-        <style>
-            .ex-decoration p:nth-of-type(1) { text-decoration: underline; }
-            .ex-decoration p:nth-of-type(2) { text-decoration: line-through; }
-            .ex-decoration p:nth-of-type(3) { text-decoration: overline; }
-            .ex-decoration p:nth-of-type(4) { text-decoration: blink; }
-            .ex-decoration p:nth-of-type(5) { text-decoration: underline line-through overline blink; }
-            .ex-decoration p:nth-of-type(6) { text-decoration: underline overline wavy red; }
-            .ex-decoration p:nth-of-type(7) { text-decoration: line-through dashed purple; }
+        <style class="example">
+            #ex-decoration p:nth-of-type(1) { text-decoration: underline; }
+            #ex-decoration p:nth-of-type(2) { text-decoration: line-through; }
+            #ex-decoration p:nth-of-type(3) { text-decoration: overline; }
+            #ex-decoration p:nth-of-type(4) { text-decoration: blink; }
+            #ex-decoration p:nth-of-type(5) { text-decoration: underline line-through overline blink; }
+            #ex-decoration p:nth-of-type(6) { text-decoration: underline overline wavy red; }
+            #ex-decoration p:nth-of-type(7) { text-decoration: line-through dashed purple; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
         <p>text-decoration-line 여러 가지를 동시에 적용할 수 있다.</p>
-        <div class="ex-decoration">
+        <div id="ex-decoration">
             <p>Abc 123 만세</p>
             <p>Abc 123 만세</p>
             <p>Abc 123 만세</p>

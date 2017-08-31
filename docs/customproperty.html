@@ -4,11 +4,16 @@
         <title></title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="vendor/prism-default.css" rel="stylesheet">
+        <script src="vendor/prism.min.js"  data-manual></script>
         <link href="utils.css" rel="stylesheet">
         <script src="utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
     </head>
     <body>
-        <style>
+        <style class="example">
             :root {
                 --red: #f00;
                 --green: #0f0;
@@ -23,7 +28,6 @@
             .green { background-color: var(--green); }
             .blue { background-color: var(--blue); }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
         <p>--VARNAME으로 속성을 생성하고 var(--VARNAME)를 이용해서 참조할 수 있다. 다른 속성과 마찬가지로 cascading된다. </p>
         <div>
             <div class="red">red</div>

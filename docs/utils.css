@@ -1,19 +1,32 @@
-.cssBox {
+pre.cssBox, pre.htmlBox {
+    /* max-height: 400px; */
+    font-size: 14px;
+    line-height: 1.2;
+}
+pre.cssBox {
+    background-color: hsl(120, 13%, 92%);
+}
+.cssBox:nth-of-type(n+2) {
+    margin-top: 3em;
+}
+/* .cssBox {
+    margin: 1em 0 0.1em;
+    padding: 0.5em 0;
     position: relative;
-    font-size: 12px;
+    font-size: 14px;
     background-color: yellowgreen;
-}
-.cssBox .showStyleControls {
-    position: absolute;
-    right:0;
-}
+} */
 
-script + p {
+style.example + pre + p, style.example + pre + pre + p {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 16px;
     line-height: 1.2;
     border: 2px dashed yellowgreen;
-    margin: 10px 0px;
+    margin: 0 0 0.5em;
     padding: 5px;
     width: auto;
+}
+
+.htmlBox .toolbar {
+    display:none;
 }

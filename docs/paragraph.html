@@ -4,8 +4,13 @@
         <title>paragraph</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="vendor/prism-default.css" rel="stylesheet">
+        <script src="vendor/prism.min.js"  data-manual></script>
         <link href="utils.css" rel="stylesheet">
         <script src="utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
         <style>
             p { 
                 margin-top: 0.1em;
@@ -16,18 +21,17 @@
         </style>
     </head>
     <body>
-        <style>
-            .ex-line-height  { font-size: 10px }
-            .ex-line-height > div:nth-of-type(1)     { line-height: 150%; }
-            .ex-line-height > div:nth-of-type(1) > p { font-size: 2em; }
-            .ex-line-height > div:nth-of-type(2)     { line-height: 150%; }
-            .ex-line-height > div:nth-of-type(2) > p { font-size: 2em; line-height: 150%; }
-            .ex-line-height > div:nth-of-type(3)     { line-height: 1.5; }
-            .ex-line-height > div:nth-of-type(3) > p { font-size: 2em; }
+        <style class="example">
+            #ex-line-height  { font-size: 10px }
+            #ex-line-height > div:nth-of-type(1)     { line-height: 150%; }
+            #ex-line-height > div:nth-of-type(1) > p { font-size: 2em; }
+            #ex-line-height > div:nth-of-type(2)     { line-height: 150%; }
+            #ex-line-height > div:nth-of-type(2) > p { font-size: 2em; line-height: 150%; }
+            #ex-line-height > div:nth-of-type(3)     { line-height: 1.5; }
+            #ex-line-height > div:nth-of-type(3) > p { font-size: 2em; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
         <p>line-height는 계산된 값이 상속되기 때문에 비율 자체를 상속하기 위해서는 단위 없이 사용해야 한다.</p>
-        <div class="ex-line-height">
+        <div id="ex-line-height">
             <div>
                 <p>The line-height CSS property sets the amount of space used for lines, such as in text. On block-level elements, it specifies the minimum height of line boxes within the element. On non-replaced inline elements, it specifies the height that is used to calculate line box height.</p>
             </div>
@@ -39,21 +43,20 @@
             </div>
         </div>
 
-        <style>
-            .ex-line-height-2  { font-family: arial; font-size: 16px; }
-            .ex-line-height-2 > div     { line-height: 1.5; }
-            .ex-line-height-2 > div > p { font-size: 1em; }
-            .ex-line-height-2 > div > p > span { line-height: 3; background-color: plum; }
-            .ex-line-height-2 > div > p > em { display: inline-block; line-height: 3; background-color: peachpuff; }
-            .ex-line-height-2 > div > p > strong { display: inline-block; line-height: 2; background-color: skyblue; }
-            .ex-line-height-2 > div:nth-of-type(3) > p { line-height: 0.5; }
-            .ex-line-height-2 > div:nth-of-type(4) > p { line-height: 0.5; }
-            .ex-line-height-2 > div:nth-of-type(4) > p > span { line-height: 1; background-color: plum; }
-            .ex-line-height-2 > div:nth-of-type(4) > p > span.middle { line-height: 1; background-color: royalblue; }
+        <style class="example">
+            #ex-line-height-2  { font-family: arial; font-size: 16px; }
+            #ex-line-height-2 > div     { line-height: 1.5; }
+            #ex-line-height-2 > div > p { font-size: 1em; }
+            #ex-line-height-2 > div > p > span { line-height: 3; background-color: plum; }
+            #ex-line-height-2 > div > p > em { display: inline-block; line-height: 3; background-color: peachpuff; }
+            #ex-line-height-2 > div > p > strong { display: inline-block; line-height: 2; background-color: skyblue; }
+            #ex-line-height-2 > div:nth-of-type(3) > p { line-height: 0.5; }
+            #ex-line-height-2 > div:nth-of-type(4) > p { line-height: 0.5; }
+            #ex-line-height-2 > div:nth-of-type(4) > p > span { line-height: 1; background-color: plum; }
+            #ex-line-height-2 > div:nth-of-type(4) > p > span.middle { line-height: 1; background-color: royalblue; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
         <p>각 line의 높이를 결정하는 것은 font-size가 아니라 line-height이다. Inline 요소에 여러 line-height 값이 존재할 경우에는 가장 큰 값이 대표하게 된다. 디폴트 line-height 값은 font-family의 영향을 받으므로 정확한 높이가 필요한 경우에는 line-height를 명시적으로 지정해야 한다.</p>
-        <div class="ex-line-height-2">
+        <div id="ex-line-height-2">
             <div>
                 <p>The line-height CSS property sets the amount of space used for lines, such as in text. On block-level elements, it specifies the minimum height of line boxes within the element. On non-replaced inline elements, it specifies the height that is used to calculate line box height.</p>
             </div>
@@ -68,17 +71,16 @@
             </div>
         </div>
 
-        <style>
-            .ex-vertical-align-baseline  { font-family: arial; font-size: 16px; }
-            .ex-vertical-align-baseline > div { width: 800px; line-height: 60px; }
-            .ex-vertical-align-baseline .inline { display: inline-block; width: 200px; border: 1px solid red; background-color: plum;}
-            .ex-vertical-align-baseline .h10 { height: 10px; }
-            .ex-vertical-align-baseline .h30 { height: 30px; }
-            .ex-vertical-align-baseline .h50 { height: 50px; }
+        <style class="example">
+            #ex-vertical-align-baseline  { font-family: arial; font-size: 16px; }
+            #ex-vertical-align-baseline > div { width: 800px; line-height: 60px; }
+            #ex-vertical-align-baseline .inline { display: inline-block; width: 200px; border: 1px solid red; background-color: plum;}
+            #ex-vertical-align-baseline .h10 { height: 10px; }
+            #ex-vertical-align-baseline .h30 { height: 30px; }
+            #ex-vertical-align-baseline .h50 { height: 50px; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
         <p>vertical-align의 디폴트 값은 baseline이다. Baseline이 없는 경우에는 bottom이 된다. 그래서 baseline이 없는 span의 bottom이 align 된 것이다.</p>
-        <div class="ex-vertical-align-baseline">
+        <div id="ex-vertical-align-baseline">
             <div>ABC
                 <span class="inline h30"></span>
                 <span class="inline h10">h10</span>
@@ -86,15 +88,14 @@
             </div>
         </div>
 
-        <style>
-            .ex-vertical-align  { font-size: 10px }
-            .ex-vertical-align > div { font-size: 2em; line-height: 3;}
-            .ex-vertical-align span.top  { line-height:1; vertical-align: top; }
-            .ex-vertical-align span.middle  { line-height:1; vertical-align: middle; }
-            .ex-vertical-align span.bottom  { line-height:1; vertical-align: bottom; }
+        <style class="example">
+            #ex-vertical-align  { font-size: 10px }
+            #ex-vertical-align > div { font-size: 2em; line-height: 3;}
+            #ex-vertical-align span.top  { line-height:1; vertical-align: top; }
+            #ex-vertical-align span.middle  { line-height:1; vertical-align: middle; }
+            #ex-vertical-align span.bottom  { line-height:1; vertical-align: bottom; }
         </style>
-        <script>Utils.showPreviousSiblingCSS();</script>
-        <div class="ex-vertical-align">
+        <div id="ex-vertical-align">
             <div>
                 <span class="top">TOP</span><span class="middle">MIDDLE</span><span class="bottom">BOTTOM</span>
                 <span class="top">TOP</span><span class="middle">MIDDLE</span><span class="bottom">BOTTOM</span>

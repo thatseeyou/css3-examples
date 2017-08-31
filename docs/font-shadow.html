@@ -4,8 +4,13 @@
         <title>text-shadow</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="vendor/prism-default.css" rel="stylesheet">
+        <script src="vendor/prism.min.js"  data-manual></script>
         <link href="utils.css" rel="stylesheet">
         <script src="utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
         <style>
             p { 
                 margin-top: 0.1em;
@@ -14,8 +19,9 @@
         </style>
     </head>
     <body>
-        <style>
-            .ex-3d p { 
+        <!-- refer: https://webexpedition18.com/articles/css3-text-shadow-property/ -->
+        <style class="example">
+            #ex-3d p { 
                 font-size: 10em; 
                 font-family: GungSeo, "궁서체", AppleMyungjo;
                 color: white;
@@ -34,9 +40,8 @@
                         0 20px 20px rgba(0,0,0,.15);
             }
         </style>
-        <!-- refer: https://webexpedition18.com/articles/css3-text-shadow-property/ -->
-        <script>Utils.showPreviousSiblingCSS();</script>
-        <div class="ex-3d">
+        <p>text-shadow는 여러 개를 합성할 수 있다.</p>
+        <div id="ex-3d">
             <p>오상영 123 ABC</p>
         </div>
 

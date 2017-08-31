@@ -1,4 +1,22 @@
+declare const Prism: any;
+
 class Utils {
+    static ready(cb:()=>any) {
+        if (/^loaded|^i|^c/.test(document.readyState)) {
+            console.log('already loaded???');
+            cb();
+            return;
+        }   
+
+        let listener:EventListener;
+
+        document.addEventListener('DOMContentLoaded', listener = (evt:any) => {
+            document.removeEventListener('DOMContentLoaded', listener);
+            console.log('ready!!!');
+            cb();
+        })
+    }
+
     static camelCase(input: string) {
         return input.toLowerCase().replace(/-(.)/g, function (match, group1) {
             return group1.toUpperCase();
@@ -41,92 +59,130 @@ class Utils {
         console.log('');
     }
 
-    static showPreviousSiblingCSS(showVerbose:boolean = false) {
-        let currentContainer = document.currentScript.parentElement as HTMLElement;
-        let styleElement = document.currentScript.previousElementSibling as HTMLStyleElement; 
-
-        var cssBox = document.createElement("pre");
-        currentContainer.insertBefore(cssBox, document.currentScript);
-        cssBox.className = 'cssBox';
-
-        updateCssBox(showVerbose, cssBox, styleElement);
-        
-        function updateCssBox(showVerbose:boolean, cssBox:HTMLElement, styleElement:HTMLStyleElement) {
-            let rulesString = getRulesString(showVerbose, styleElement);
-            cssBox.innerText = rulesString;
-            addButtons(cssBox);
+    static showSource(sourceElement:Element, where?:Element) {
+        let container = sourceElement.parentElement as Element;
+        if (where == undefined) {
+            where = sourceElement.nextElementSibling as Element;
         }
 
-        function getRulesString(showVerbose:boolean, styleElement:HTMLStyleElement) {
-            let rulesString = '';
+        var preBox = document.createElement("pre");
+        var codeBox = document.createElement("code");
+        preBox.appendChild(codeBox);
 
-            if (showVerbose) {
-                let cssRules = (styleElement.sheet as CSSStyleSheet).cssRules;
+        if (sourceElement.nodeName == 'STYLE') {
+            preBox.className = 'cssBox';
+            codeBox.className = 'language-css';
+            codeBox.textContent = Utils.getRulesString(false, sourceElement as HTMLStyleElement);
+        }
+        else if (sourceElement.nodeName == 'DIV') {
+            preBox.className = 'htmlBox';
+            codeBox.className = 'language-markup';
+            codeBox.textContent = Utils.getHtmlString(sourceElement as HTMLElement);
+        }
+        else {
+            codeBox.className = 'language-markup';
+        }
 
-                for (let i = 0; i < cssRules.length; i++) {
-                    let cssRule = cssRules[i];
+        container.insertBefore(preBox, where);
+    }
 
-                    if (cssRule.type == CSSRule.STYLE_RULE) {
-                        let cssStyleRule = cssRule as CSSStyleRule;
-                        let selector = cssStyleRule.selectorText;
 
-                        let styles = '';
-                        for (let j = 0; j < cssStyleRule.style.length; j++) {
-                            let styleKey = cssStyleRule.style[j];
-                            let value = cssStyleRule.style.getPropertyValue(styleKey);
-                            if (cssStyleRule.style.length > 1)
-                                styles += `    ${styleKey}: ${value};\n`;
-                            else
-                                styles += `${styleKey}: ${value}; `;
-                        }
+    static getHtmlString(element:HTMLElement):string {
+        return element.innerHTML as string;
+    }
 
+    static getRulesString(showVerbose:boolean, styleElement:HTMLStyleElement):string {
+        let rulesString = '';
+
+        if (showVerbose) {
+            let cssRules = (styleElement.sheet as CSSStyleSheet).cssRules;
+
+            for (let i = 0; i < cssRules.length; i++) {
+                let cssRule = cssRules[i];
+
+                if (cssRule.type == CSSRule.STYLE_RULE) {
+                    let cssStyleRule = cssRule as CSSStyleRule;
+                    let selector = cssStyleRule.selectorText;
+
+                    let styles = '';
+                    for (let j = 0; j < cssStyleRule.style.length; j++) {
+                        let styleKey = cssStyleRule.style[j];
+                        let value = cssStyleRule.style.getPropertyValue(styleKey);
                         if (cssStyleRule.style.length > 1)
-                            rulesString += `${selector} {\n${styles}}\n`;
+                            styles += `    ${styleKey}: ${value};\n`;
                         else
-                            rulesString += `${selector} { ${styles}}\n`;
-
+                            styles += `${styleKey}: ${value}; `;
                     }
+
+                    if (cssStyleRule.style.length > 1)
+                        rulesString += `${selector} {\n${styles}}\n`;
+                    else
+                        rulesString += `${selector} { ${styles}}\n`;
                 }
             }
-            else {
-                let textContent = styleElement.textContent as string;
-                // let leadingSpace = rulesString.match(/^\s+/);
-                let numFirstIndentation = textContent.search(/[^\s]+/);
-                if (numFirstIndentation < 0)
-                    numFirstIndentation = 0;
+        }
+        else {
+            rulesString = styleElement.textContent as string;
+        }
 
-                let lines = textContent.split('\n');
-                for (let line of lines) {
-                    let numIndentation = line.search(/[^\s]+/);
-                    /* skip blank line */
-                    if (numIndentation < 0)
-                        continue;
+        return rulesString;
+    }
 
-                    let trimLength = numIndentation > numFirstIndentation ? numFirstIndentation : numIndentation;
+    // refer : http://prismjs.com/plugins/toolbar/
+    static registerPrismButtons() {
+        Prism.plugins.toolbar.registerButton('verbose', {
+            text: 'on/off verbosity', // required
+            onClick: function (env:any) { // optional
+                let codeElement = env.element as HTMLElement;
+                if (!codeElement.parentElement) 
+                    return;
 
-                    rulesString += line.substr(trimLength) + '\n';
+                let styleElement = codeElement.parentElement.previousElementSibling as HTMLStyleElement;
+
+                // toggle verbosity 
+                // classList : IE >= 10
+                let verbosity = codeElement.classList.contains("style-verbose");
+                if (verbosity) 
+                    codeElement.classList.remove("style-verbose");
+                else
+                    codeElement.classList.add("style-verbose");
+
+                codeElement.textContent = Utils.getRulesString(!verbosity, styleElement);
+                Prism.highlightElement(codeElement);
+            }
+        });
+    }
+
+    static showExampleSources() {
+        let exampleStyles = document.body.querySelectorAll("style.example");
+        for(let i = 0; i < exampleStyles.length; i++) {
+            let exampleStyle = exampleStyles[i];
+
+            // 1. html
+            let next = exampleStyle.nextElementSibling;
+            if (next) {
+                console.debug();
+                if (next.nodeName == 'P') {
+                    next = next.nextElementSibling;
                 }
-                rulesString = rulesString.trim();
+                if (next && next.nodeName == 'DIV') {
+                    Utils.showSource(next, exampleStyle.nextElementSibling as Element);
+                }
             }
 
-            return rulesString;
+            // 2. style
+            Utils.showSource(exampleStyle);
         }
 
-        function addButtons(container: HTMLElement) {
-            let div = document.createElement('div');
-            let button = document.createElement('button');
-            div.className = 'showStyleControls';
-            button.className = 'scVerbose';
-            button.textContent = 'On/Off verbodse';
+        // 3. buttons
+        Utils.registerPrismButtons(); 
+    }
 
-            div.appendChild(button);
-            container.insertBefore(div, container.firstChild);
-
-            button.addEventListener('click', () => {
-                console.log(getRulesString(false, styleElement));
-                showVerbose = !showVerbose;
-                updateCssBox(showVerbose, cssBox, styleElement);
-            });
-        }
+    static configureShowSources() {
+        Utils.ready(() => {
+            Utils.showExampleSources();
+            // 이벤트 핸들링 순서에 따른 문제가 발생할 수 있어서 data-manual을 지정해서 자동으로 적용하는 것을 막은 후에 수동으로 명령을 실행한다.
+            Prism.highlightAll();
+        });
     }
 }
