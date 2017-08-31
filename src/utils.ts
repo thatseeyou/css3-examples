@@ -88,7 +88,26 @@ class Utils {
 
 
     static getHtmlString(element:HTMLElement):string {
-        return element.innerHTML as string;
+        let content = element.outerHTML;
+
+        // 시작하는 <div> 앞의 공백을 </div> 앞의 공백과 맞추는 작업을 한다.
+        let lines = content.split('\n');
+        let minIndentation = 8;
+        for (let i = 1; i < lines.length; i++) {
+            let line = lines[i];
+            let numIndentation = line.search(/[^\s]+/);
+            /* skip blank line */
+            if (numIndentation < 0)
+                continue;
+
+            if (numIndentation < minIndentation) {
+                minIndentation = numIndentation;
+            }
+        }
+
+        content = Array(minIndentation + 1).join(' ') + content;
+
+        return content;
     }
 
     static getRulesString(showVerbose:boolean, styleElement:HTMLStyleElement):string {
@@ -158,10 +177,12 @@ class Utils {
         for(let i = 0; i < exampleStyles.length; i++) {
             let exampleStyle = exampleStyles[i];
 
+            // <script> 다음에 insert 되기 때문에 .htmlBox 다음에 .cssBox을 추가해야 <script> .cssBox .htmlBox 순서가 된다.
+
             // 1. html
             let next = exampleStyle.nextElementSibling;
             if (next) {
-                console.debug();
+                // <p>는 opitonal
                 if (next.nodeName == 'P') {
                     next = next.nextElementSibling;
                 }

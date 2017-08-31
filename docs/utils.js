@@ -72,7 +72,22 @@ var Utils = (function () {
         container.insertBefore(preBox, where);
     };
     Utils.getHtmlString = function (element) {
-        return element.innerHTML;
+        var content = element.outerHTML;
+        // 시작하는 <div> 앞의 공백을 </div> 앞의 공백과 맞추는 작업을 한다.
+        var lines = content.split('\n');
+        var minIndentation = 8;
+        for (var i = 1; i < lines.length; i++) {
+            var line = lines[i];
+            var numIndentation = line.search(/[^\s]+/);
+            /* skip blank line */
+            if (numIndentation < 0)
+                continue;
+            if (numIndentation < minIndentation) {
+                minIndentation = numIndentation;
+            }
+        }
+        content = Array(minIndentation + 1).join(' ') + content;
+        return content;
     };
     Utils.getRulesString = function (showVerbose, styleElement) {
         var rulesString = '';
@@ -129,10 +144,11 @@ var Utils = (function () {
         var exampleStyles = document.body.querySelectorAll("style.example");
         for (var i = 0; i < exampleStyles.length; i++) {
             var exampleStyle = exampleStyles[i];
+            // <script> 다음에 insert 되기 때문에 .htmlBox 다음에 .cssBox을 추가해야 <script> .cssBox .htmlBox 순서가 된다.
             // 1. html
             var next = exampleStyle.nextElementSibling;
             if (next) {
-                console.debug();
+                // <p>는 opitonal
                 if (next.nodeName == 'P') {
                     next = next.nextElementSibling;
                 }
