@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>Box shadow</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="../vendor/prism-default.css" rel="stylesheet">
+        <script src="../vendor/prism.min.js"  data-manual></script>
+        <link href="../utils.css" rel="stylesheet">
+        <script src="../utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
+        <style>
+            html {
+                font-size: 10px;
+            }
+            .flex {
+                display:flex;
+                flex-wrap: wrap;
+            }
+            body {
+                margin-bottom: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <style class="example">
+            #ex-1 div {
+                width: 40rem;
+                height: 10rem;
+                background-color: #f0f0f0;
+            }
+
+            .liftedge {
+                position: relative;
+            }
+
+            .liftedge::before,
+            .liftedge::after {
+                content: '';
+                position: absolute;
+                bottom: 10px;
+                width: 40%;
+                height: 10px;
+                box-shadow: 0 5px 14px rgba(0,0,0,.7);
+                z-index: -1;
+            }
+            .liftedge::before {
+                left: 15px;
+                transform: skew(-5deg) rotate(-5deg);
+            }
+            .liftedge::after {
+                right: 15px;
+                transform: skew(5deg) rotate(5deg);
+            }
+
+            /* optinal hovering animation */
+            .liftedge::before,
+            .liftedge::after {
+                transition: all .3s ease-in-out;
+            }
+            .liftedge:hover::before {
+                left: 5px;
+            }
+            .liftedge:hover::after {
+                right: 5px;
+            }
+            .liftedge:hover::before,
+            .liftedge:hover::after {
+                box-shadow: 0 2px 14px rgba(0,0,0,.4);
+            }
+        </style>
+        <p>하단 양쪽의 아래에 보이지 않는 box 2개의 shadow를 추가해서 양쪽 아래가 약간 들린 효과를 줄 수 있다. </p>
+        <div id="ex-1">
+            <div class="liftedge"></div>
+        </div>
+    </body>
+</html>
