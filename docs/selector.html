@@ -66,8 +66,12 @@
         </div>
 
         <style class="example">
-            #ex-empty :empty         { background-color: orange; }
-            #ex-empty :empty::before { content: "empty"; color: red; }
+            #ex-empty :empty         { 
+                background-color: orange; 
+            }
+            #ex-empty :empty::before { 
+                content: "empty"; color: red; 
+            }
         </style>
         <p>:empty can find empty elements</p>
         <div id="ex-empty">
@@ -124,15 +128,13 @@
         </div>
 
         <style class="example">
-            #ex-child>div { margin-bottom: 10px; }
-            #ex-child>div:nth-of-type(1) :first-child::after          { content: " (fist-child)"; color: blue;}
-            #ex-child>div:nth-of-type(2) :first-of-type::after        { content: " (first-of-type)"; color: green; }
-            #ex-child>div:nth-of-type(3) article:first-of-type::after { content: " (article:first-of-type)"; color: green;}
-            #ex-child>div:nth-of-type(4) :last-child::after           { content: " (last-child)"; color: blue;}
-            #ex-child>div:nth-of-type(5) :nth-child(odd)::after       { content: " (nth-child(odd))"; color: blue;}
-            #ex-child>div:nth-of-type(6) :nth-of-type(odd)::after     { content: " (nth-of-type(odd))"; color: green;}
+            #ex-child>div :first-child::after { 
+                content: " (fist-child)"; color: blue;
+            }
+            #ex-child>div :last-child::after { 
+                content: " (last-child)"; color: blue;
+            }
         </style>
-        <p>child selectors</p>
         <div id="ex-child">
             <div>
                 <div>div1</div>
@@ -141,27 +143,21 @@
                 <div>div2</div>
                 <div>div3</div>
             </div>
-            <div>
-                <div>div1</div>
-                <article>article1</article>
-                <article>article2</article>
-                <div>div2</div>
-                <div>div3</div>
-            </div>
-            <div>
-                <div>div1</div>
-                <article>article1</article>
-                <article>article2</article>
-                <div>div2</div>
-                <div>div3</div>
-            </div>
-            <div>
-                <div>div1</div>
-                <article>article1</article>
-                <article>article2</article>
-                <div>div2</div>
-                <div>div3</div>
-            </div>
+        </div>
+
+        <style class="example">
+            #ex-of-type > div:first-child{
+                margin-bottom: 1em;
+            }
+            #ex-of-type>div:nth-of-type(1) :first-of-type::after { 
+                content: " (first-of-type)"; color: green; 
+            }
+            #ex-of-type>div:nth-of-type(2) article:first-of-type::after {
+                content: " (article:first-of-type)"; color: green;
+            }
+        </style>
+        <p>:firt-of-type에서 type을 지정하지 않으면 각각의 type에 대해서 각각 동작한다.</p>
+        <div id="ex-of-type">
             <div>
                 <div>div1</div>
                 <article>article1</article>
@@ -179,8 +175,42 @@
         </div>
 
         <style class="example">
-            #ex-range input:in-range { color: blue; font-size: 2em;}
-            #ex-range input:out-of-range { color: red; font-size: 5em;}
+            #ex-odd > div:first-child{
+                margin-bottom: 1em;
+            }
+            #ex-odd>div:nth-of-type(1) :nth-child(odd)::after { 
+                content: " (nth-child(odd))"; color: blue;
+            }
+            #ex-odd>div:nth-of-type(2) :nth-of-type(odd)::after { 
+                content: " (nth-of-type(odd))"; color: green;
+            }
+        </style>
+        </style>
+        <p>odd는 1,3,5,7,9,...</p>
+        <div id="ex-odd">
+            <div>
+                <div>div1</div>
+                <article>article1</article>
+                <article>article2</article>
+                <div>div2</div>
+                <div>div3</div>
+            </div>
+            <div>
+                <div>div1</div>
+                <article>article1</article>
+                <article>article2</article>
+                <div>div2</div>
+                <div>div3</div>
+            </div>
+        </div>
+
+        <style class="example">
+            #ex-range input:in-range { 
+                color: blue; font-size: 2em;
+            }
+            #ex-range input:out-of-range { 
+                color: red; font-size: 5em;
+            }
         </style>
         <p>:in-range, :out-of-range</p>
         <div id="ex-range">
@@ -188,10 +218,18 @@
         </div>
 
         <style class="example">
-            #ex-sibling div ~ div::after { content: " (div ~ div)"; color: blue;}
-            #ex-sibling .title + div { font-size: 1.5em;}
-            #ex-sibling .title + div + div { font-size: 2.0em;}
-            #ex-sibling .title + div + div:hover { background-color: orange;}
+            #ex-sibling div ~ div::after { 
+                content: " (div ~ div)"; color: blue;
+            }
+            #ex-sibling .title + div { 
+                font-size: 1.5em;
+            }
+            #ex-sibling .title + div + div { 
+                font-size: 2.0em;
+            }
+            #ex-sibling .title + div + div:hover { 
+                background-color: orange;
+            }
         </style>
         <p>sibling selectors (+, ~)</p>
         <div id="ex-sibling">
@@ -203,8 +241,12 @@
         </div>
 
         <style class="example">
-            #ex-not div:not(:first-of-type)::after { content: " (div:not(:first-of-type)::after)"; color: blue;}
-            #ex-not div:not(.second)               { background-color: yellow; }
+            #ex-not div:not(:first-of-type)::after {
+                content: " (div:not(:first-of-type)::after)"; color: blue;
+            }
+            #ex-not div:not(.second) {
+                background-color: yellow; 
+            }
         </style>
         <p>:not() selector</p>
         <div id="ex-not">
@@ -218,7 +260,7 @@
             #ex-table table > tbody > tr { color: red; }
             #ex-table table tr           { background-color: green; }
         </style>
-        <p>tbody가 없는 경우에는 자동으로 tbody를 생성한다. 원래 파일을 확인해 보면 차이를 확인할 수 있다. table > tr selector는 무시된다.<p>
+        <p>tbody가 없는 경우에는 자동으로 tbody를 생성한다. 원래 파일을 확인해 보면 차이를 확인할 수 있다. table > tr selector는 무시된다.</p>
         <div id="ex-table">
             <table>
                 <tr>
