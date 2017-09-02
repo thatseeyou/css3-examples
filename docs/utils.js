@@ -11,7 +11,6 @@ var Utils = (function () {
         var listener;
         document.addEventListener('DOMContentLoaded', listener = function (evt) {
             document.removeEventListener('DOMContentLoaded', listener);
-            console.log('ready!!!');
             cb();
         });
     };
@@ -125,9 +124,13 @@ var Utils = (function () {
             text: 'on/off verbosity',
             onClick: function (env) {
                 var codeElement = env.element;
-                if (!codeElement.parentElement)
+                var preElement = codeElement.parentElement;
+                if (!preElement)
                     return;
-                var styleElement = codeElement.parentElement.previousElementSibling;
+                var container = preElement.parentElement;
+                if (!container)
+                    return;
+                var styleElement = container.previousElementSibling;
                 // toggle verbosity 
                 // classList : IE >= 10
                 var verbosity = codeElement.classList.contains("style-verbose");
@@ -162,10 +165,24 @@ var Utils = (function () {
         // 3. buttons
         Utils.registerPrismButtons();
     };
+    Utils.wrapSourcesWithFlex = function () {
+        var exampleStyles = document.body.querySelectorAll("style.example");
+        for (var i = 0; i < exampleStyles.length; i++) {
+            var exampleStyle = exampleStyles[i];
+            var cssBox = exampleStyle.nextElementSibling;
+            var htmlBox = cssBox.nextElementSibling;
+            var flexBox = document.createElement("div");
+            flexBox.className = "sources-container";
+            (exampleStyle.parentElement).insertBefore(flexBox, cssBox);
+            flexBox.appendChild(cssBox);
+            flexBox.appendChild(htmlBox);
+        }
+    };
     Utils.configureShowSources = function () {
         Utils.ready(function () {
             Utils.showExampleSources();
             // 이벤트 핸들링 순서에 따른 문제가 발생할 수 있어서 data-manual을 지정해서 자동으로 적용하는 것을 막은 후에 수동으로 명령을 실행한다.
+            Utils.wrapSourcesWithFlex();
             Prism.highlightAll();
         });
     };

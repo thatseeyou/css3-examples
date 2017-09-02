@@ -12,7 +12,6 @@ class Utils {
 
         document.addEventListener('DOMContentLoaded', listener = (evt:any) => {
             document.removeEventListener('DOMContentLoaded', listener);
-            console.log('ready!!!');
             cb();
         })
     }
@@ -153,10 +152,14 @@ class Utils {
             text: 'on/off verbosity', // required
             onClick: function (env:any) { // optional
                 let codeElement = env.element as HTMLElement;
-                if (!codeElement.parentElement) 
+                let preElement = codeElement.parentElement; 
+                if (!preElement) 
+                    return;
+                let container = preElement.parentElement; 
+                if (!container) 
                     return;
 
-                let styleElement = codeElement.parentElement.previousElementSibling as HTMLStyleElement;
+                let styleElement = container.previousElementSibling as HTMLStyleElement;
 
                 // toggle verbosity 
                 // classList : IE >= 10
@@ -199,10 +202,29 @@ class Utils {
         Utils.registerPrismButtons(); 
     }
 
+    static wrapSourcesWithFlex() {
+        let exampleStyles = document.body.querySelectorAll("style.example");
+        for(let i = 0; i < exampleStyles.length; i++) {
+            let exampleStyle = exampleStyles[i];
+
+            let cssBox = exampleStyle.nextElementSibling as Element;
+            let htmlBox = cssBox.nextElementSibling as Element;
+
+            let flexBox = document.createElement("div");
+            flexBox.className = "sources-container";
+            (<Element>(exampleStyle.parentElement)).insertBefore(flexBox, cssBox);
+            
+            flexBox.appendChild(cssBox);
+            flexBox.appendChild(htmlBox);
+        }
+    }
+
     static configureShowSources() {
         Utils.ready(() => {
             Utils.showExampleSources();
             // 이벤트 핸들링 순서에 따른 문제가 발생할 수 있어서 data-manual을 지정해서 자동으로 적용하는 것을 막은 후에 수동으로 명령을 실행한다.
+            Utils.wrapSourcesWithFlex();
+
             Prism.highlightAll();
         });
     }

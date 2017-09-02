@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>Inline</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="vendor/prism-default.css" rel="stylesheet">
+        <script src="vendor/prism.min.js"  data-manual></script>
+        <link href="utils.css" rel="stylesheet">
+        <script src="utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
+        <style>
+            html {
+                font-size: 10px;
+            }
+            .flex {
+                display:flex;
+                flex-wrap: wrap;
+            }
+        </style>
+    </head>
+    <body>
+        <style class="example">
+            #ex-ignore-property div {
+                background-color: greenyellow;
+                font-size: 16px;
+                line-height: 16px;
+                margin: 4px;
+            }
+            #ex-ignore-property span {
+                background-color: pink;
+                border: 1px solid red;
+                margin: 20px;
+                padding: 10px;
+            }
+            #ex-ignore-property div > span:nth-of-type(1) {
+                height: 100px;
+            }
+            #ex-ignore-property div > span:nth-of-type(2) {
+                width: 200px;
+            }
+            #ex-ignore-property .inline-box span{
+                display: inline-block;
+            }
+            #ex-ignore-property .bottom span{
+                vertical-align: bottom;
+            }
+        </style>
+        <p>display:inline 인 경우에는 width, height는 무시되고 margin-top, margin-bottom은 배경의 범위에는 영향을 주지만 위치에는 영향을 주지 못한다. vertical-align의 디폴트는 baseline이기 때문에 폰트의 baseline이 일치하도록 위치가 결정된다. margin-left, margin-right의 경우에 collapse되지 않으며 vertical-align top/bottom의 기준이 된다. inline-box의 경우에는 margin-top, margin-bottom도 collapse되지 않는다.</p>
+        <div id="ex-ignore-property">
+            <div>
+                <span>height:100px</span>
+                <span>width:200px</span>
+            </div>
+            <div class="inline-box">
+                <span>height:100px</span>
+                <span>width:200px</span>
+            </div>
+            <div class="inline-box bottom">
+                <span>height:100px</span>
+                <span>width:200px</span>
+            </div>
+        </div>
+
+        <style class="example">
+            #ex-line-height div {
+                background-color: greenyellow;
+                font-size: 16px;
+                margin: 4px;
+            }
+            #ex-line-height span {
+                background-color: pink;
+                border: 1px solid red;
+            }
+            #ex-line-height div > span:nth-of-type(1) {
+                line-height: 50px;
+                height: 20px;
+                margin: 20px;
+            }
+            #ex-line-height div > span:nth-of-type(2) {
+                line-height: 50px;
+                height: 100px;
+                margin: 10px;
+            }
+            #ex-line-height .inline-box span {
+                display: inline-block;
+            } 
+            #ex-line-height .bottom span {
+                vertical-align: bottom;
+            } 
+        </style>
+        <p>최종 height는 inline의 경우에는 line-height가 되고 inline-box의 경우에는 height에 margin을 더한 값이 되고 vertical-align의 기준까지 된다. inline의 경우에는 padding, margin을 추가해도 top,bottom의 경우에는 배경의 크기만 달라지고 위치 계산에는 영향을 주지 않는다. inline은 줄이 변경될 경우에는 잘리게 되지만 inline-block은 잘리지 않는다.</p>
+        <div id="ex-line-height">
+            <div>
+                <span>line-height:50px;height:20px;</span>
+                <span>line-height:50px;height:100px;</span>
+            </div>
+            <div class="inline-box">
+                <span>line-height:50px;height:20px;</span>
+                <span>line-height:50px;height:100px;</span>
+            </div>
+            <div class="inline-box bottom">
+                <span>line-height:50px;height:20px;</span>
+                <span>line-height:50px;height:100px;</span>
+            </div>
+        </div>
+    </body>
+</html>
