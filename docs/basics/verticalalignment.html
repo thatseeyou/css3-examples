@@ -63,22 +63,22 @@
         <style class="example">
             #ex-transform > div {
                 border: 1px solid royalblue;
-                height: 100px;
+                height: 150px;
+                width: 150px;
                 position: relative;
 
                 font-size: 1.6rem;
             }
             #ex-transform > div > div {
-                width: 50%;
-                height: 50%;
+                width: 50px;
+                height: 50px;
                 background-color: greenyellow;
 
                 position: absolute;
             }
             #ex-transform > div:nth-of-type(1) > div {
-                top: 0;
-                left: 0;
-                transform: translate(50%, 50%);
+                top: 50%;
+                left: 50%;
             }
             #ex-transform > div:nth-of-type(2) > div {
                 top: 50%;
@@ -86,16 +86,18 @@
                 transform: translate(-50%, -50%);
             }
             #ex-transform > div:nth-of-type(3) > div {
-                right: 0;
-                bottom: 0;
+                top: 50%;
+                left: 50%;
                 transform: translate(-50%, -50%);
+                padding-top: 20px;
+                border-right: 30px solid pink;
             }
         </style>
-        <p>block 요소를 가운데 정렬하기 위해서는 transform positon과 margin: auto를 이용한다.</p>
-        <div id="ex-transform">
-            <div><div>(0,,,0) (50%,50%)</div></div>
-            <div><div>(50%,,,50%) (-50%,-50%)</div></div>
-            <div><div>(,0,0,) (-50%,-50%)</div></div>
+        <p>1. block 요소의 좌상단을 가운데(50%)로 옮기고 2. block 요소의 경계를 포함한 box의 절반(-50%)를 이동해서 중심을 맞춘다. 이 방법을 확장하면 내부 요소의 중점을 기준으로 원하는 곳에 위치시킬 수 있다.</p>
+        <div id="ex-transform" class="flex">
+            <div><div>No translate</div></div>
+            <div><div>translate</div></div>
+            <div><div>border & padding</div></div>
         </div>
 
         <style class="example">
