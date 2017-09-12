@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>Various vertical alignments</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="../vendor/prism-default.css" rel="stylesheet">
+        <script src="../vendor/prism.min.js"  data-manual></script>
+        <link href="../utils.css" rel="stylesheet">
+        <script src="../utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
+        <style>
+            html {
+                font-size: 10px;
+            }
+            .flex {
+                display:flex;
+                flex-wrap: wrap;
+            }
+        </style>
+    </head>
+    <body>
+        <style class="example">
+            #ex-one-line-text div {
+                border: 1px solid royalblue;
+                height: 100px;
+
+                font-size: 1.6rem;
+                text-align: center;
+                line-height: 100px;
+            }
+        </style>
+        <p>한 줄짜리 text의 경우에는 line-height를 height와 같게 한다. line-height는 상속된다.</p>
+        <div id="ex-one-line-text">
+            <div>동해물과 백두산이 마르고 닳도록</div>
+        </div>
+
+        <style class="example">
+            #ex-absolute > div {
+                border: 1px solid royalblue;
+                height: 100px;
+                position: relative;
+            }
+            #ex-absolute > div > div {
+                width: 50%;
+                height: 50%;
+                background-color: greenyellow;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                margin: auto;
+            }
+        </style>
+        <p>block 요소를 가운데 정렬하기 위해서는 absolute positon과 margin: auto를 이용한다.</p>
+        <div id="ex-absolute">
+            <div><div></div></div>
+        </div>
+
+        <style class="example">
+            #ex-transform > div {
+                border: 1px solid royalblue;
+                height: 100px;
+                position: relative;
+
+                font-size: 1.6rem;
+            }
+            #ex-transform > div > div {
+                width: 50%;
+                height: 50%;
+                background-color: greenyellow;
+
+                position: absolute;
+            }
+            #ex-transform > div:nth-of-type(1) > div {
+                top: 0;
+                left: 0;
+                transform: translate(50%, 50%);
+            }
+            #ex-transform > div:nth-of-type(2) > div {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            #ex-transform > div:nth-of-type(3) > div {
+                right: 0;
+                bottom: 0;
+                transform: translate(-50%, -50%);
+            }
+        </style>
+        <p>block 요소를 가운데 정렬하기 위해서는 transform positon과 margin: auto를 이용한다.</p>
+        <div id="ex-transform">
+            <div><div>(0,,,0) (50%,50%)</div></div>
+            <div><div>(50%,,,50%) (-50%,-50%)</div></div>
+            <div><div>(,0,0,) (-50%,-50%)</div></div>
+        </div>
+
+        <style class="example">
+            #ex-flex > div {
+                border: 1px solid royalblue;
+                height: 100px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            #ex-flex > div > div {
+                width: 50%;
+                height: 50%;
+                background-color: greenyellow;
+            }
+        </style>
+        <p>flexible box의 main 축(디폴트는 수평) 정렬(justify-content)과 직교축 정렬(align-items)을 이용하면 간단히 끝난다.</p>
+        <div id="ex-flex">
+            <div><div></div></div>
+        </div>
+
+        <style class="example">
+            #ex-two-line-text div {
+                border: 1px solid royalblue;
+                width: 100px;
+                height: 100px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                font-size: 1.6rem;
+                text-align: center;
+                line-height: 1.2;
+            }
+            #ex-two-line-text span {
+                display: block;
+            }
+        </style>
+        <p>2줄 이상의 text의 경우에는 line-height를 이용한 방법을 사용할 수 없으므로 한 번 감싼 후에 정렬한다. 여기서는 flex를 이용하였다.</p>
+        <div id="ex-two-line-text">
+            <div><span>동해물과 백두산이 마르고 닳도록</span></div>
+        </div>
+
+        <style class="example">
+            #ex-vertical-align div {
+                border: 1px solid royalblue;
+
+                font-size: 1.6rem;
+                text-align: center;
+                line-height: 1;
+            }
+            #ex-vertical-align .do  { vertical-align:  0px; }
+            #ex-vertical-align .re  { vertical-align: 10px; }
+            #ex-vertical-align .mi  { vertical-align: 20px; }
+            #ex-vertical-align .fa  { vertical-align: 30px; }
+            #ex-vertical-align .sol { vertical-align: 40px; }
+            #ex-vertical-align .ra  { vertical-align: 50px; }
+            #ex-vertical-align .si  { vertical-align: 60px; }
+        </style>
+        <p>inline에 적용되는 vertical-align 속성은 부모의 baseline 기준으로 +이면 위로 -이면 아래로 내려간다. %를 사용하면 자신의 line-height를 기준으로 계산된다. 50%라고 중간에 위치하는 것은 아니다.</p>
+        <div id="ex-vertical-align">
+            <div>(부모의 baseline)
+                <span class="sol">학교</span>
+                <span class="ra">종이</span>
+                <span class="sol">땡땡</span>
+                <span class="mi">땡</span>
+                <span class="sol">어서</span>
+                <span class="mi">모이</span>
+                <span class="re">자</span>
+            </div>
+        </div>
+    </body>
+</html>
