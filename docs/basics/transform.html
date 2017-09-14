@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title>transform</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="../vendor/prism-default.css" rel="stylesheet">
+        <script src="../vendor/prism.min.js"  data-manual></script>
+        <link href="../utils.css" rel="stylesheet">
+        <script src="../utils.js"></script>
+        <script>Utils.configureShowSources();</script>
+
+        <style>
+            html {
+                font-size: 10px;
+            }
+            .flex {
+                display:flex;
+                flex-wrap: wrap;
+            }
+        </style>
+    </head>
+    <body>
+        <style class="example">
+            #ex-translate {
+                perspective: 100px;
+            }
+            #ex-translate > div {
+                width: 10rem;
+                height: 10rem;
+
+                font-size: 1.6rem;
+            }
+            #ex-translate > div       { transition: 2s; }
+            #ex-translate > div:hover { transition: 2s; }
+            #ex-translate > div:nth-of-type(2n+1) { background-color: rgba(255, 0, 0, 0.5); }
+            #ex-translate > div:nth-of-type(2n)   { background-color: rgba(0, 255, 0, 0.5); }
+            #ex-translate > div:nth-of-type(1):hover { transform: translateX(20px); }
+            #ex-translate > div:nth-of-type(2):hover { transform: translateY(20px); }
+            #ex-translate > div:nth-of-type(3):hover { transform: translateZ(20px); }
+        </style>
+        <p>translateZ의 변화를 보기 위해서는 perspective를 0이 아닌 값으로 주어야 한다. 보는 사람의 위치에 해당하는 값이다. 값이 작을 수록 변화에 민감하다. translateZ의 결과는 firefox와 Safari, Chrome이 서로 다르다.</p>
+        <div id="ex-translate" class="flex">
+            <div>X</div>
+            <div>Y</div>
+            <div>Z</div>
+        </div>
+
+        <style class="example">
+            #ex-rotate {
+                perspective: 100rem;
+            }
+            #ex-rotate > div {
+                width: 10rem;
+                height: 10rem;
+
+                font-size: 1.6rem;
+            }
+            #ex-rotate > div:nth-of-type(2n+1) { background-color: rgba(255, 0, 0, 0.6); }
+            #ex-rotate > div:nth-of-type(2n)   { background-color: rgba(0, 255, 0, 0.6); }
+            #ex-rotate > div       { transition: 2s; }
+            #ex-rotate > div:hover { transition: 2s; }
+            #ex-rotate > div:nth-of-type(1):hover { transform: rotateX(45deg); }
+            #ex-rotate > div:nth-of-type(2):hover { transform: rotateY(45deg); }
+            #ex-rotate > div:nth-of-type(3):hover { transform: rotateZ(-45deg); }
+            #ex-rotate > div:nth-of-type(4):hover { transform: rotateZ(-45deg) rotateY(45deg); }
+            #ex-rotate > div:nth-of-type(5):hover { transform: rotateY(45deg) rotateZ(-45deg); }
+            #ex-rotate > div:nth-of-type(6):hover { transform: rotate3d(1, 1, 0, 45deg); }
+        </style>
+        <p>rotateX는 X축을 중심으로 회전한다. Eric Meyer의 책에서는 회전축도 함께 회전을 하며 여러 개를 나열하면 좌측부터 순차적으로 적용이 된다고 하지만 맞지 않는다. 우측부터 적용이 되고 좌표계는 고정으로 이해해야 한다. 교환 법칙은 성립하지 않는다. rotate3d를 이용하면 3차원 공간에 임의의 회전축을 지정하는 것도 가능하다.</p>
+        <div id="ex-rotate" class="flex">
+            <div>X축</div>
+            <div>Y축</div>
+            <div>Z축</div>
+            <div>Y->Z</div>
+            <div>Z->Y</div>
+            <div>임의의 축</div>
+        </div>
+
+        <style class="example">
+            #ex-scale {
+                perspective: 10rem;
+            }
+            #ex-scale > div {
+                width: 10rem;
+                height: 10rem;
+
+                font-size: 1.6rem;
+            }
+            #ex-scale > div:nth-of-type(2n+1) { background-color: rgba(255, 0, 0, 0.6); }
+            #ex-scale > div:nth-of-type(2n)   { background-color: rgba(0, 255, 0, 0.6); }
+            #ex-scale > div       { transition: 2s; }
+            #ex-scale > div:hover { transition: 2s; }
+            #ex-scale > div:nth-of-type(1):hover { transform: scaleX(2); }
+            #ex-scale > div:nth-of-type(2):hover { transform: scaleY(2); }
+            #ex-scale > div:nth-of-type(3):hover { transform: scale(2); }
+            #ex-scale > div:nth-of-type(4)       { transform: rotateX(45deg); }
+            #ex-scale > div:nth-of-type(4):hover { transform: scaleZ(2) rotateX(45deg); }
+            #ex-scale > div:nth-of-type(5)       { transform: rotateX(45deg); }
+            #ex-scale > div:nth-of-type(5):hover { transform: scale3d(2,2,2) rotateX(45deg); }
+            #ex-scale > div:nth-of-type(6):hover { transform: scaleX(2) rotate(45deg); }
+            #ex-scale > div:nth-of-type(7):hover { transform: rotate(45deg) scaleX(2); }
+        </style>
+        <p>scale3d는 scaleX, scaleY, scaleZ를 하나로 표현하는 방법이다. </p>
+        <div id="ex-scale" class="flex">
+            <div>X</div>
+            <div>Y</div>
+            <div>XY</div>
+            <div>Z</div>
+            <div>3d</div>
+            <div>rotate->X</div>
+            <div>X->rotate</div>
+        </div>
+
+        <style class="example">
+            #ex-origin {
+                perspective: 10rem;
+            }
+            #ex-origin > div {
+                width: 10rem;
+                height: 10rem;
+
+                font-size: 1.6rem;
+            }
+            #ex-origin > div:nth-of-type(2n+1) { background-color: rgba(255, 0, 0, 0.6); }
+            #ex-origin > div:nth-of-type(2n)   { background-color: rgba(0, 255, 0, 0.6); }
+            #ex-origin > div       { transition: 2s; }
+            #ex-origin > div:hover { transition: 2s; transform: rotate(45deg) }
+            #ex-origin > div:nth-of-type(1) { transform-origin: center center }
+            #ex-origin > div:nth-of-type(2) { transform-origin: 50% 50% }
+            #ex-origin > div:nth-of-type(3) { transform-origin: right bottom }
+            #ex-origin > div:nth-of-type(4) { transform-origin: 100% 100% }
+            #ex-origin > div:nth-of-type(5) { transform-origin: 0 0 }
+            #ex-origin > div:nth-of-type(5):hover { 
+                transform-origin: 100% 100%; 
+                transform: translateX(100%) rotate(45deg); 
+            }
+            #ex-origin > div:nth-of-type(6) { transform-origin: 200% 200% }
+        </style>
+        <p>transform-origin도 animation 대상이다. Percentage의 기준은 자신의 크기다.</p>
+        <div id="ex-origin" class="flex">
+            <div>center</div>
+            <div>50%</div>
+            <div>RB</div>
+            <div>100%</div>
+            <div>origin change</div>
+            <div>200%</div>
+        </div>
+
+        <style class="example">
+            #ex-perspective > div > div {
+                width: 10rem;
+                height: 10rem;
+
+                font-size: 1.6rem;
+            }
+            #ex-perspective .perspective {
+                perspective: 500px;
+            }
+            #ex-perspective > div > div:nth-of-type(2n+1) { background-color: rgba(255, 0, 0, 0.6); }
+            #ex-perspective > div > div:nth-of-type(2n)   { background-color: rgba(0, 255, 0, 0.6); }
+            #ex-perspective > div > div:nth-of-type(1) { transform: rotateX(45deg) perspective(100px); }
+            #ex-perspective > div > div:nth-of-type(2) { transform: perspective(100px) rotateX(45deg); }
+            #ex-perspective > div > div:nth-of-type(3) { transform: perspective(500px) rotateX(45deg); }
+            #ex-perspective > div > div:nth-of-type(4) { transform: perspective(1000px) rotateX(45deg); }
+        </style>
+        <p>perspective는 속성으로 지정하거나 함수로 지정할 수 있다. 개별 transform에 지정을 한 후에 속성으로 지정하면 중첩되어 나타난다. transform의 함수는 앞에 위치해야 원하는 결과를 얻을 수 있다.</p>
+        <div id="ex-perspective">
+            <div class="flex">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="perspective flex">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+
+        <style class="example">
+            #ex-group > div {
+                width: 20rem;
+                border: 1px solid black;
+            }
+            #ex-group > div > div {
+                width: 10rem;
+                height: 10rem;
+
+                font-size: 1.6rem;
+            }
+            #ex-group > div > div:nth-of-type(2n+1) { background-color: rgba(255, 0, 0, 0.6); }
+            #ex-group > div > div:nth-of-type(2n)   { background-color: rgba(0, 255, 0, 0.6); }
+            #ex-group > div:nth-of-type(1) > div , 
+            #ex-group > div:nth-of-type(2) > div { 
+                transform: perspective(100px) rotateX(45deg); 
+            }
+            #ex-group > div:nth-of-type(2) > div:nth-of-type(1) { 
+                transform-origin: right center;
+            }
+            #ex-group > div:nth-of-type(2) > div:nth-of-type(2) { 
+                transform-origin: left center;
+            }
+            #ex-group > div:nth-of-type(3) { 
+                transform-style: preserve-3d;
+                perspective: 100px;
+            }
+            #ex-group > div:nth-of-type(3) > div:nth-of-type(1) { 
+                transform: rotateX(45deg); 
+                transform-origin: right center;
+            }
+            #ex-group > div:nth-of-type(3) > div:nth-of-type(2) { 
+                transform: rotateX(45deg); 
+                transform-origin: left center;
+            }
+        </style>
+        <p>함수를 이용한 개별 perspective는 개별적인 관점을 갖기 때문에 피카소 그림처럼 된다. transform-origin이 관점에 영향을 미친다. 속성을 이용하면 그룸에 대해서 하나의 관점으로 보게 된다. </p>
+        <div id="ex-group">
+            <div class="flex">
+                <div>center</div>
+                <div>center</div>
+            </div>
+            <div class="flex">
+                <div>right center</div>
+                <div>left center</div>
+            </div>
+            <div class="flex">
+                <div>right center</div>
+                <div>left center</div>
+            </div>
+        </div>
+
+        <style class="example">
+            #ex-transform-style > div {
+                width: 20rem;
+                height: 13rem;
+                background-color: rgba(0, 255, 0, 0.6); 
+                transform: perspective(1000px) rotateY(60deg);
+            }
+            #ex-transform-style .preserve-3d {
+                transform-style: preserve-3d;
+            }
+            #ex-transform-style .force-flat {
+                overflow: hidden;
+            }
+            #ex-transform-style > div > div { 
+                width: 10rem;
+                height: 10rem;
+
+                font-size: 1.6rem;
+                background-color: rgba(255, 0, 0, 0.6); 
+                transform: perspective(100px) rotateX(45deg); 
+            }
+        </style>
+        <p>transform-style의 디폴트는 flat으로 rendering 이후의 결과를 평면화한다. preserve-3d는 3차원 정보가 유지가 된다. 일부 속성은 preserve-3d와 함께 할 수 없어서 강제로 flat으로 변경이 된다. overflow, filter, clip, clip-path, mask-image, mask-border-source, mix-blend-mode의 값을 디폴트가 아닌 값으로 변경을 하면 flat이 된다. flat인 경우에도 관통한 상태를 표현하는 방법이 브라우저마다 다르다.</p>
+        <div id="ex-transform-style">
+            <div>
+                <div></div>
+            </div>
+            <div class="preserve-3d">
+                <div></div>
+            </div>
+            <div class="preserve-3d force-flat">
+                <div></div>
+            </div>
+        </div>
+
+        <style class="example">
+            #ex-backface-visibility > div{
+                width: 100px;
+                height: 100px; 
+                position: relative;
+                perspective: 1000px;
+
+                line-height: 100px;
+                text-align: center;
+                font-size: 20px;
+            }
+            #ex-backface-visibility .flipper {
+                transform-style: preserve-3d;
+                transition: 2s;
+            }
+            #ex-backface-visibility .flipper:hover {
+                transform: rotateY(180deg);
+            }
+            #ex-backface-visibility .flipper > div {
+                width: 100px;
+                height: 100px;
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+            #ex-backface-visibility > div:nth-of-type(1) .flipper > div {
+                background-color: rgba(0, 255, 0, 0.5);
+                -webkit-backface-visibility: visible;
+                backface-visibility: visible;
+            }
+            #ex-backface-visibility > div:nth-of-type(2) .flipper > div {
+                background-color: rgba(255, 0, 255, 0.5);
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+            }
+            #ex-backface-visibility > div:nth-of-type(3) .flipper > div {
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+            }
+            #ex-backface-visibility > div:nth-of-type(3) .flipper > div:nth-of-type(1) {
+                background-color: rgba(255, 0, 0, 1);
+            }
+            #ex-backface-visibility > div:nth-of-type(3) .flipper > div:nth-of-type(2) {
+                background-color: rgba(0, 0, 255, 1);
+                transform: rotateY(180deg);
+            }
+        </style>
+        <p>refer: https://davidwalsh.name/css-flip</p>
+        <div id="ex-backface-visibility" class="flex">
+            <div>
+                <div class="flipper">
+                    <div>visible</div>
+                </div>
+            </div>
+            <div>
+                <div class="flipper">
+                    <div>hidden</div>
+                </div>
+            </div>
+            <div>
+                <div class="flipper">
+                    <div>FRONT</div>
+                    <div>BACK</div>
+                </div>
+            </div>
+        </div>
+
+        <style class="example">
+            #ex-flipping {
+                background-color: green;
+            }
+            #ex-flipping > div {
+                width: 100px;
+                height: 100px; 
+                position: relative;
+                perspective: 150px;
+
+                line-height: 100px;
+                text-align: center;
+                font-size: 20px;
+            }
+            #ex-flipping .flipper {
+                width: 100px;
+                height: 100px; 
+                transform-style: preserve-3d;
+                transition: 2s;
+            }
+            #ex-flipping > div:nth-of-type(1) .flipper:hover {
+                transform: rotate3d(-1,0,0,180deg);
+            }
+            #ex-flipping > div:nth-of-type(2) .flipper:hover {
+                transform: rotate3d(0,-1,0,180deg);
+            }
+            #ex-flipping > div:nth-of-type(3) .flipper:hover {
+                transform: rotate3d(1,0,0,180deg);
+            }
+            #ex-flipping > div:nth-of-type(4) .flipper:hover {
+                transform: rotate3d(0,1,0,180deg);
+            }
+            #ex-flipping > div:nth-of-type(5) .flipper:hover {
+                transform: rotate3d(-1,1,0,180deg);
+            }
+            #ex-flipping > div:nth-of-type(6) .flipper:hover {
+                transform: rotate3d(-1,-1,0,180deg);
+            }
+            #ex-flipping > div:nth-of-type(7) .flipper:hover {
+                transform: rotate3d(1,-1,0,180deg);
+            }
+            #ex-flipping > div:nth-of-type(8) .flipper:hover {
+                transform: rotate3d(1,1,0,180deg);
+            }
+            #ex-flipping .flipper > div {
+                width: 100px;
+                height: 100px;
+                position: absolute;
+                top: 0;
+                right: 0;
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                border-radius: 1000px;
+            }
+            #ex-flipping .flipper > div:nth-of-type(1) {
+                background-color: black;
+                color: white
+            }
+            #ex-flipping .flipper > div:nth-of-type(2) {
+                background-color: white;
+                color: black;
+                transform: rotateY(180deg);
+            }
+        </style>
+        <p>refer: https://davidwalsh.name/css-flip</p>
+        <div id="ex-flipping" class="flex">
+            <div>
+                <div class="flipper">
+                    <div>N</div>
+                    <div>BACK</div>
+                </div>
+            </div>
+            <div>
+                <div class="flipper">
+                    <div>E</div>
+                    <div>BACK</div>
+                </div>
+            </div>
+            <div>
+                <div class="flipper">
+                    <div>S</div>
+                    <div>BACK</div>
+                </div>
+            </div>
+            <div>
+                <div class="flipper">
+                    <div>W</div>
+                    <div>BACK</div>
+                </div>
+            </div>
+            <div>
+                <div class="flipper">
+                    <div>NW</div>
+                    <div>BACK</div>
+                </div>
+            </div>
+            <div>
+                <div class="flipper">
+                    <div>NE</div>
+                    <div>BACK</div>
+                </div>
+            </div>
+            <div>
+                <div class="flipper">
+                    <div>SE</div>
+                    <div>BACK</div>
+                </div>
+            </div>
+            <div>
+                <div class="flipper">
+                    <div>SW</div>
+                    <div>BACK</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
