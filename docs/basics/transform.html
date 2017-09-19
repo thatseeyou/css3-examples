@@ -339,9 +339,11 @@
             #ex-flipping {
                 background-color: green;
             }
-            #ex-flipping > div {
+            #ex-flipping div {
                 width: 100px;
                 height: 100px; 
+            }
+            #ex-flipping > div {
                 position: relative;
                 perspective: 150px;
 
@@ -350,8 +352,6 @@
                 font-size: 20px;
             }
             #ex-flipping .flipper {
-                width: 100px;
-                height: 100px; 
                 transform-style: preserve-3d;
                 transition: 2s;
             }
@@ -380,18 +380,14 @@
                 transform: rotate3d(1,1,0,180deg);
             }
             #ex-flipping .flipper > div {
-                width: 100px;
-                height: 100px;
                 position: absolute;
-                top: 0;
-                right: 0;
                 -webkit-backface-visibility: hidden;
                 backface-visibility: hidden;
                 border-radius: 1000px;
             }
             #ex-flipping .flipper > div:nth-of-type(1) {
                 background-color: black;
-                color: white
+                color: white;
             }
             #ex-flipping .flipper > div:nth-of-type(2) {
                 background-color: white;
@@ -399,7 +395,7 @@
                 transform: rotateY(180deg);
             }
         </style>
-        <p>8방향으로 뒤집히는 바둑알</p>
+        <p>8방향으로 뒤집히는 바둑알. firefox의 경우에는 BACK이 FRONT 다음에 위치해야 겹쳐 보이는 일이 발생하지 않는다.</p>
         <div id="ex-flipping" class="flex">
             <div>
                 <div class="flipper">
