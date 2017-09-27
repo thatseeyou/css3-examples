@@ -209,7 +209,7 @@
         <div id="divInDiv2"><div>divInDiv2</div></div>
 
         <style>
-            #input {
+            #input, input.spanOnHover {
                 /* browser compatibility */
                 display: inline-block; /* inline in case of firefox */
                 width: 140px;
@@ -219,7 +219,19 @@
                 border-color: rgb(218,218,218);
                 background-color: rgba(158, 75, 75, 0.5);
             }
-            .input {
+            input.spanOnHover:hover {
+                display: inline-block;
+                width: 140px;
+                height: 20px;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: 16px;
+                border-color: rgb(255,255,255);
+                background-color: rgba(0,0,0,0);
+
+                border-color: transparent;
+                transition: 1s;
+            }
+            span.input {
                 display: inline-block;
                 width: 140px;
                 height: 20px;
@@ -233,9 +245,26 @@
                 padding: 1px;
                 cursor: text;
             }
+            input.inputAsSpan {
+                display: inline-block;
+                width: 140px;
+                height: 20px;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: 16px;
+                background-color: rgba(0,0,0,0);
+
+                border-style: none;
+                border-width: 0px;
+                cursor: text;
+            }
+            input.inputAsSpan:disabled {
+                color: black;
+            }
         </style>
-        <input id="input" placeholder="input">
-        <span id="spanAsInput" class="input">input</span>
+        <input id="input" value="input">
+        <input class="inputAsSpan" disabled value="inputAsSpan">
+        <input class="spanOnHover" value="spanOnHover">
+        <span id="spanAsInput" class="input">span</span>
 
         <script type="text/javascript">
             screenLog.init({ autoScroll: false });
