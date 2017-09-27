@@ -107,6 +107,7 @@
                 width: 200px;
             }
 
+
         </style>
     </head>
     <body>
@@ -207,6 +208,34 @@
         <div id="divInDiv1"><div>divInDiv1</div></div>
         <div id="divInDiv2"><div>divInDiv2</div></div>
 
+        <style>
+            #input {
+                /* browser compatibility */
+                display: inline-block; /* inline in case of firefox */
+                width: 140px;
+                height: 20px;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: 16px;
+                border-color: rgb(218,218,218);
+                background-color: rgba(158, 75, 75, 0.5);
+            }
+            .input {
+                display: inline-block;
+                width: 140px;
+                height: 20px;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-size: 16px;
+                border-color: rgb(218,218,218);
+                background-color: rgba(158, 75, 75, 0.5);
+
+                border-style: inset;
+                border-width: 2px;
+                padding: 1px;
+                cursor: text;
+            }
+        </style>
+        <input id="input" placeholder="input">
+        <span id="spanAsInput" class="input">input</span>
 
         <script type="text/javascript">
             screenLog.init({ autoScroll: false });
@@ -253,6 +282,9 @@
                 let divInDiv2   = document.getElementById('divInDiv2');
                 let divInDiv3   = document.getElementById('divInDiv3');
 
+                let input       = document.getElementById('input');
+                let spanAsInput = document.getElementById('spanAsInput');
+
                 Utils.diffComputedStyleForElements(div, span);
                 Utils.diffComputedStyleForElements(div, spanAsDiv);
                 Utils.diffComputedStyleForElements(span, divAsSpan);
@@ -294,6 +326,7 @@
                 Utils.diffComputedStyleForElements(span, a);
                 Utils.diffComputedStyleForElements(a, spanAsA);
 
+
                 // HTMLDivElement has 'align' property. 
                 // Changing DOM 'align' affects CSS property 'text-align'.
                 div2.align = 'center';
@@ -304,6 +337,7 @@
                 divInDiv2.align = 'center';
                 Utils.diffComputedStyleForElements(divInDiv1, divInDiv2);
 
+                Utils.diffComputedStyleForElements(input, spanAsInput);
             })();
 
         </script>
