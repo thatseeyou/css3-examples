@@ -1,5 +1,5 @@
 "use strict";
-var Utils = (function () {
+var Utils = /** @class */ (function () {
     function Utils() {
     }
     Utils.ready = function (cb) {
@@ -30,101 +30,113 @@ var Utils = (function () {
     };
     Utils.diffComputedStyle = function (style1, style2, desc1, desc2) {
         console.log("BEGIN diff " + desc1 + " | " + desc2);
-        for (var i = 0; i < style1.length; i++) {
-            var styleKey1 = style1[i];
+        Array.prototype.forEach.call(style1, function (styleKey1, i) {
             var styleKey2 = style2[i];
-            if (styleKey1 != styleKey2) {
-                console.warn("[" + i + "] " + styleKey1 + " | " + styleKey2 + " ; Key is different");
-            }
-            else {
+            if (styleKey1 == styleKey2) {
                 var value1 = style1.getPropertyValue(styleKey1);
                 var value2 = style2.getPropertyValue(styleKey1);
                 if (value1 != value2) {
                     console.log("[" + i + "] " + styleKey1 + " : " + value1 + " | " + value2);
                 }
             }
-        }
+            else {
+                console.warn("[" + i + "] " + styleKey1 + " | " + styleKey2 + " ; Key is different");
+            }
+        });
         console.log("END   diff " + desc1 + " | " + desc2);
         console.log('');
     };
-    Utils.showSource = function (sourceElement, where) {
-        var container = sourceElement.parentElement;
+    /**
+     * Create Prism input format from code container
+     *
+     * <div>HTML code</div> => <pre class="htmlBox"><code class="language-markup">HTML code</code></pre>
+     * <style>CSS code</style> => <pre class="cssBox"><code class="language-css">CSS code</code></pre>
+     *
+     * @param {Element} sourceContainer - Source code text will be extracted from sourceElement
+     * @param {Element} where - default: nextElementSibling
+     */
+    Utils.createPrismCodeElementFromSourceContainer = function (sourceContainer, where) {
+        var container = sourceContainer.parentElement;
         if (where == undefined) {
-            where = sourceElement.nextElementSibling;
+            where = sourceContainer.nextElementSibling;
         }
         var preBox = document.createElement("pre");
         var codeBox = document.createElement("code");
         preBox.appendChild(codeBox);
-        if (sourceElement.nodeName == 'STYLE') {
+        if (sourceContainer.nodeName == 'STYLE') {
             preBox.className = 'cssBox';
             codeBox.className = 'language-css';
-            codeBox.textContent = Utils.getRulesString(false, sourceElement);
+            codeBox.textContent = Utils.extractCSSRulesStringFromStyleElement(sourceContainer, false);
         }
-        else if (sourceElement.nodeName == 'DIV') {
+        else if (sourceContainer.nodeName == 'DIV') {
             preBox.className = 'htmlBox';
             codeBox.className = 'language-markup';
-            codeBox.textContent = Utils.getHtmlString(sourceElement);
+            codeBox.textContent = Utils.extractHtmlStringFromContainer(sourceContainer);
         }
         else {
             codeBox.className = 'language-markup';
         }
         container.insertBefore(preBox, where);
     };
-    Utils.getHtmlString = function (element) {
-        var content = element.outerHTML;
+    /**
+     * Extract HTML string from container element
+     *
+     * @param {HTMLElement} containerElement
+     */
+    Utils.extractHtmlStringFromContainer = function (containerElement) {
+        var content = containerElement.outerHTML;
         // 시작하는 <div> 앞의 공백을 </div> 앞의 공백과 맞추는 작업을 한다.
         var lines = content.split('\n');
-        var minIndentation = 8;
-        for (var i = 1; i < lines.length; i++) {
-            var line = lines[i];
+        lines.shift(); /* lines from 2nd line */
+        var minIndentation = lines.reduce(function (minIndentation, line) {
             var numIndentation = line.search(/[^\s]+/);
-            /* skip blank line */
             if (numIndentation < 0)
-                continue;
-            if (numIndentation < minIndentation) {
-                minIndentation = numIndentation;
-            }
-        }
+                return minIndentation;
+            return (numIndentation < minIndentation) ? numIndentation : minIndentation;
+        }, 8);
         content = Array(minIndentation + 1).join(' ') + content;
         return content;
     };
-    Utils.getRulesString = function (showVerbose, styleElement) {
+    /**
+     * Extract CSS rules string from <style> element
+     *
+     * @param {boolean} showVerbose - show as lengthen form
+     * @param {HTMLStyleElement} styleElement
+     */
+    Utils.extractCSSRulesStringFromStyleElement = function (styleElement, showVerbose) {
         var rulesString = '';
         if (showVerbose) {
             var cssRules = styleElement.sheet.cssRules;
-            for (var i = 0; i < cssRules.length; i++) {
-                var cssRule = cssRules[i];
-                if (cssRule.type == CSSRule.STYLE_RULE) {
-                    var cssStyleRule = cssRule;
-                    var selector = cssStyleRule.selectorText;
-                    var styles = '';
-                    for (var j = 0; j < cssStyleRule.style.length; j++) {
-                        var styleKey = cssStyleRule.style[j];
-                        var value = cssStyleRule.style.getPropertyValue(styleKey);
-                        if (cssStyleRule.style.length > 1)
-                            styles += "    " + styleKey + ": " + value + ";\n";
-                        else
-                            styles += styleKey + ": " + value + "; ";
-                    }
-                    if (cssStyleRule.style.length > 1)
-                        rulesString += selector + " {\n" + styles + "}\n";
-                    else
-                        rulesString += selector + " { " + styles + "}\n";
-                }
-            }
+            var map_1 = Array.prototype.map;
+            rulesString = map_1.call(cssRules, function (cssRule, index, cssRules) {
+                if (cssRule.type != CSSRule.STYLE_RULE)
+                    return '';
+                var cssStyleRule = cssRule;
+                var selector = cssStyleRule.selectorText;
+                var styles = map_1.call(cssStyleRule.style, function (styleKey, index, style) {
+                    var value = style.getPropertyValue(styleKey);
+                    return (style.length > 1) ? "    " + styleKey + ": " + value + ";\n" : styleKey + ": " + value + "; ";
+                }).join('');
+                return (cssStyleRule.style.length > 1) ? selector + " {\n" + styles + "}\n" : selector + " { " + styles + "}\n";
+            }).join('');
         }
         else {
             rulesString = styleElement.textContent;
         }
         return rulesString;
     };
-    // refer : http://prismjs.com/plugins/toolbar/
+    /**
+     * Add Prism toolbar plugin buttons for cssBox
+     * htmlBox buttons is hid by CSS(utils.css)
+     *
+     * refer : http://prismjs.com/plugins/toolbar/
+     */
     Utils.registerPrismButtons = function () {
         Prism.plugins.toolbar.registerButton('verbose', {
             text: 'on/off verbosity',
             onClick: function (env) {
-                var codeElement = env.element;
-                var preElement = codeElement.parentElement;
+                var prismCodeElement = env.element;
+                var preElement = prismCodeElement.parentElement;
                 if (!preElement)
                     return;
                 var container = preElement.parentElement;
@@ -133,21 +145,31 @@ var Utils = (function () {
                 var styleElement = container.previousElementSibling;
                 // toggle verbosity 
                 // classList : IE >= 10
-                var verbosity = codeElement.classList.contains("style-verbose");
+                var verbosity = prismCodeElement.classList.contains("style-verbose");
                 if (verbosity)
-                    codeElement.classList.remove("style-verbose");
+                    prismCodeElement.classList.remove("style-verbose");
                 else
-                    codeElement.classList.add("style-verbose");
-                codeElement.textContent = Utils.getRulesString(!verbosity, styleElement);
-                Prism.highlightElement(codeElement);
+                    prismCodeElement.classList.add("style-verbose");
+                // reset to original code
+                prismCodeElement.textContent = Utils.extractCSSRulesStringFromStyleElement(styleElement, !verbosity);
+                Prism.highlightElement(prismCodeElement);
             }
         });
     };
-    Utils.showExampleSources = function () {
+    /**
+     * Append htmlBox & cssBox to <script> like followings.
+     *
+     * <script>...</script>
+     * <div class="sources-container">
+     *   <pre class="cssBox"><code class="language-css"></code></pre>
+     *   <pre class="htmlBox"><code class="language-markup></code></pre>
+     * </div>
+     * <p>...</p>
+     * <div>...</div>
+     */
+    Utils.createCodeElementAll = function () {
         var exampleStyles = document.body.querySelectorAll("style.example");
-        for (var i = 0; i < exampleStyles.length; i++) {
-            var exampleStyle = exampleStyles[i];
-            // <script> 다음에 insert 되기 때문에 .htmlBox 다음에 .cssBox을 추가해야 <script> .cssBox .htmlBox 순서가 된다.
+        Array.prototype.forEach.call(exampleStyles, function (exampleStyle) {
             // 1. html
             var next = exampleStyle.nextElementSibling;
             if (next) {
@@ -156,33 +178,44 @@ var Utils = (function () {
                     next = next.nextElementSibling;
                 }
                 if (next && next.nodeName == 'DIV') {
-                    Utils.showSource(next, exampleStyle.nextElementSibling);
+                    Utils.createPrismCodeElementFromSourceContainer(next, exampleStyle.nextElementSibling);
                 }
             }
             // 2. style
-            Utils.showSource(exampleStyle);
-        }
+            Utils.createPrismCodeElementFromSourceContainer(exampleStyle);
+            // 3. wrap html and style with container
+            var cssBox = exampleStyle.nextElementSibling;
+            var htmlBox = cssBox.nextElementSibling;
+            var container = document.createElement("div");
+            container.className = "sources-container";
+            (exampleStyle.parentElement).insertBefore(container, cssBox);
+            container.appendChild(cssBox);
+            container.appendChild(htmlBox);
+        });
         // 3. buttons
         Utils.registerPrismButtons();
     };
-    Utils.wrapSourcesWithFlex = function () {
-        var exampleStyles = document.body.querySelectorAll("style.example");
-        for (var i = 0; i < exampleStyles.length; i++) {
-            var exampleStyle = exampleStyles[i];
-            var cssBox = exampleStyle.nextElementSibling;
-            var htmlBox = cssBox.nextElementSibling;
-            var flexBox = document.createElement("div");
-            flexBox.className = "sources-container";
-            (exampleStyle.parentElement).insertBefore(flexBox, cssBox);
-            flexBox.appendChild(cssBox);
-            flexBox.appendChild(htmlBox);
-        }
-    };
+    /**
+     * HTML 파일에서 style과 html를 추출해서 보여준다.
+     *
+     * HTML 소스는 다음과 같은 형태로 되어 있어야 한다. <p>는 부연 설명으로 생략가능하다.
+     * <style class="example">...</style>
+     * <p>...optional...</p>
+     * <div>...HTML...</div>
+     *
+     * 아래 함수를 수행하면 다음과 같이 <style> 다음에 prism이 생성한 코드가 추가된다.
+     * <style class="example">...</style>
+     * <div class="sources-container">
+     *   <pre class="cssBox language-css code-toolbar">...</pre>
+     *   <pre class="htmlBox language-markup code-toolbar">...</pre>
+     * </div>
+     * <p>...optional...</p>
+     * <div>...HTML...</div>
+     */
     Utils.configureShowSources = function () {
         Utils.ready(function () {
-            Utils.showExampleSources();
+            Utils.createCodeElementAll();
             // 이벤트 핸들링 순서에 따른 문제가 발생할 수 있어서 data-manual을 지정해서 자동으로 적용하는 것을 막은 후에 수동으로 명령을 실행한다.
-            Utils.wrapSourcesWithFlex();
             Prism.highlightAll();
         });
     };

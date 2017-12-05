@@ -33,6 +33,7 @@
     width: auto;
 }
 
+/* hide PrismJS toolbar plugin buttons on htmlBox */
 .htmlBox .toolbar {
     display:none;
 }

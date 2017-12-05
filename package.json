@@ -21,6 +21,6 @@
   "homepage": "https://github.com/thatseeyou/css3-examples#readme",
   "devDependencies": {
     "lite-server": "^2.3.0",
-    "typescript": "^2.4.2"
+    "typescript": "^2.6.2"
   }
 }
