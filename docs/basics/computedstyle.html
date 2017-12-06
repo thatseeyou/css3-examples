@@ -38,6 +38,9 @@
                 margin-left: 40px;
                 margin-right: 40px;
             }
+            .svg {
+                overflow: hidden;
+            }
             .h1 {
                 display: block;
                 font-size: 2em;
@@ -132,6 +135,9 @@
         <blockquote id="blockquote">Hello, World!</blockquote>
         <div id="divAsBlockQuote" class="blockquote">Hello, World! too</div>
 
+        <svg id="svg" width="100px" height="100px"></svg>
+        <span id="spanAsSVG" class="svg" width="100px" height="100px"></span>
+
         <table id="table">
             <thead id="thead">
                 <tr>
@@ -217,7 +223,7 @@
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
                 font-size: 16px;
                 border-color: rgb(218,218,218);
-                background-color: rgba(158, 75, 75, 0.5);
+                background-color: rgb(158, 75, 75);
             }
             input.spanOnHover:hover {
                 border-color: transparent;
@@ -281,6 +287,7 @@
                 let spanAsPre   = document.getElementById('spanAsCode');
                 let blockquote  = document.getElementById('blockquote');
                 let divAsBlockQuote = document.getElementById('divAsBlockQuote');
+                let svg         = document.getElementById('svg');
 
                 let table       = document.getElementById('table');
                 let divAsTable  = document.getElementById('divAsTable');
@@ -326,6 +333,7 @@
                 Utils.diffComputedStyleForElements(code, spanAsCode);
                 Utils.diffComputedStyleForElements(div, blockquote);
                 Utils.diffComputedStyleForElements(blockquote, divAsBlockQuote);
+                Utils.diffComputedStyleForElements(span, svg);
 
                 Utils.diffComputedStyleForElements(div, table);
                 Utils.diffComputedStyleForElements(table, divAsTable);
