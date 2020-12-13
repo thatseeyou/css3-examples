@@ -1,51 +1,50 @@
-"use strict";
-var Utils = /** @class */ (function () {
-    function Utils() {
-    }
-    Utils.ready = function (cb) {
+class Utils {
+    static ready(cb) {
         if (/^loaded|^i|^c/.test(document.readyState)) {
             console.log('already loaded???');
             cb();
             return;
         }
-        var listener;
-        document.addEventListener('DOMContentLoaded', listener = function (evt) {
+        let listener;
+        document.addEventListener('DOMContentLoaded', listener = (evt) => {
             document.removeEventListener('DOMContentLoaded', listener);
             cb();
         });
-    };
-    Utils.camelCase = function (input) {
+    }
+    static camelCase(input) {
         return input.toLowerCase().replace(/-(.)/g, function (match, group1) {
             return group1.toUpperCase();
         });
-    };
-    Utils.diffComputedStyleForElements = function (element1, element2) {
-        var style1 = window.getComputedStyle(element1);
-        var style2 = window.getComputedStyle(element2);
-        var id1 = element1.id ? " id=\"" + element1.id + "\"" : '';
-        var id2 = element2.id ? " id=\"" + element2.id + "\"" : '';
-        var desc1 = "<" + element1.tagName + id1 + ">";
-        var desc2 = "<" + element2.tagName + id2 + ">";
+    }
+    static diffComputedStyleForElements(element1, element2) {
+        const style1 = window.getComputedStyle(element1);
+        const style2 = window.getComputedStyle(element2);
+        console.dir(style1);
+        const id1 = element1.id ? ` id="${element1.id}"` : '';
+        const id2 = element2.id ? ` id="${element2.id}"` : '';
+        const desc1 = `<${element1.tagName}${id1}>`;
+        const desc2 = `<${element2.tagName}${id2}>`;
         Utils.diffComputedStyle(style1, style2, desc1, desc2);
-    };
-    Utils.diffComputedStyle = function (style1, style2, desc1, desc2) {
-        console.log("BEGIN diff " + desc1 + " | " + desc2);
-        Array.prototype.forEach.call(style1, function (styleKey1, i) {
-            var styleKey2 = style2[i];
-            if (styleKey1 == styleKey2) {
-                var value1 = style1.getPropertyValue(styleKey1);
-                var value2 = style2.getPropertyValue(styleKey1);
-                if (value1 != value2) {
-                    console.log("[" + i + "] " + styleKey1 + " : " + value1 + " | " + value2);
+    }
+    static diffComputedStyle(style1, style2, desc1, desc2) {
+        console.log(`BEGIN diff ${desc1} | ${desc2}`);
+        for (let i = 0; i < style1.length; i++) {
+            const styleKey1 = style1[i];
+            const styleKey2 = style2[i];
+            if (styleKey1 === styleKey2) {
+                const value1 = style1.getPropertyValue(styleKey1);
+                const value2 = style2.getPropertyValue(styleKey1);
+                if (value1 !== value2) {
+                    console.log(`[${i}] ${styleKey1} : ${value1} | ${value2}`);
                 }
             }
             else {
-                console.warn("[" + i + "] " + styleKey1 + " | " + styleKey2 + " ; Key is different");
+                console.warn(`[${i}] ${styleKey1} | ${styleKey2} ; Key is different`);
             }
-        });
-        console.log("END   diff " + desc1 + " | " + desc2);
+        }
+        console.log(`END   diff ${desc1} | ${desc2}`);
         console.log('');
-    };
+    }
     /**
      * Create Prism input format from code container
      *
@@ -55,13 +54,13 @@ var Utils = /** @class */ (function () {
      * @param {Element} sourceContainer - Source code text will be extracted from sourceElement
      * @param {Element} where - default: nextElementSibling
      */
-    Utils.createPrismCodeElementFromSourceContainer = function (sourceContainer, where) {
-        var container = sourceContainer.parentElement;
+    static createPrismCodeElementFromSourceContainer(sourceContainer, where) {
+        const container = sourceContainer.parentElement;
         if (where == undefined) {
             where = sourceContainer.nextElementSibling;
         }
-        var preBox = document.createElement("pre");
-        var codeBox = document.createElement("code");
+        const preBox = document.createElement("pre");
+        const codeBox = document.createElement("code");
         preBox.appendChild(codeBox);
         if (sourceContainer.nodeName == 'STYLE') {
             preBox.className = 'cssBox';
@@ -77,85 +76,87 @@ var Utils = /** @class */ (function () {
             codeBox.className = 'language-markup';
         }
         container.insertBefore(preBox, where);
-    };
+    }
     /**
      * Extract HTML string from container element
      *
      * @param {HTMLElement} containerElement
      */
-    Utils.extractHtmlStringFromContainer = function (containerElement) {
-        var content = containerElement.outerHTML;
+    static extractHtmlStringFromContainer(containerElement) {
+        let content = containerElement.outerHTML;
         // 시작하는 <div> 앞의 공백을 </div> 앞의 공백과 맞추는 작업을 한다.
-        var lines = content.split('\n');
+        const lines = content.split('\n');
         lines.shift(); /* lines from 2nd line */
-        var minIndentation = lines.reduce(function (minIndentation, line) {
-            var numIndentation = line.search(/[^\s]+/);
-            if (numIndentation < 0)
+        const minIndentation = lines.reduce((minIndentation, line) => {
+            const numIndentation = line.search(/[^\s]+/);
+            if (numIndentation < 0) {
                 return minIndentation;
+            }
             return (numIndentation < minIndentation) ? numIndentation : minIndentation;
         }, 8);
         content = Array(minIndentation + 1).join(' ') + content;
         return content;
-    };
+    }
     /**
      * Extract CSS rules string from <style> element
      *
      * @param {boolean} showVerbose - show as lengthen form
      * @param {HTMLStyleElement} styleElement
      */
-    Utils.extractCSSRulesStringFromStyleElement = function (styleElement, showVerbose) {
-        var rulesString = '';
+    static extractCSSRulesStringFromStyleElement(styleElement, showVerbose) {
+        let rulesString = '';
         if (showVerbose) {
-            var cssRules = styleElement.sheet.cssRules;
-            var map_1 = Array.prototype.map;
-            rulesString = map_1.call(cssRules, function (cssRule, index, cssRules) {
+            const cssRules = styleElement.sheet.cssRules;
+            rulesString = Object.values(cssRules).map(cssRule => {
                 if (cssRule.type != CSSRule.STYLE_RULE)
                     return '';
-                var cssStyleRule = cssRule;
-                var selector = cssStyleRule.selectorText;
-                var styles = map_1.call(cssStyleRule.style, function (styleKey, index, style) {
-                    var value = style.getPropertyValue(styleKey);
-                    return (style.length > 1) ? "    " + styleKey + ": " + value + ";\n" : styleKey + ": " + value + "; ";
+                const cssStyleRule = cssRule;
+                const selector = cssStyleRule.selectorText;
+                const styles = Object.values(cssStyleRule.style).map((styleKey) => {
+                    const value = cssStyleRule.style.getPropertyValue(styleKey);
+                    return (cssStyleRule.style.length > 1) ? `    ${styleKey}: ${value};\n` : `${styleKey}: ${value}; `;
                 }).join('');
-                return (cssStyleRule.style.length > 1) ? selector + " {\n" + styles + "}\n" : selector + " { " + styles + "}\n";
+                return (cssStyleRule.style.length > 1) ? `${selector} {\n${styles}}\n` : `${selector} { ${styles}}\n`;
             }).join('');
         }
         else {
             rulesString = styleElement.textContent;
         }
         return rulesString;
-    };
+    }
     /**
      * Add Prism toolbar plugin buttons for cssBox
      * htmlBox buttons is hid by CSS(utils.css)
      *
      * refer : http://prismjs.com/plugins/toolbar/
      */
-    Utils.registerPrismButtons = function () {
+    static registerPrismButtons() {
         Prism.plugins.toolbar.registerButton('verbose', {
             text: 'on/off verbosity',
             onClick: function (env) {
-                var prismCodeElement = env.element;
-                var preElement = prismCodeElement.parentElement;
+                let prismCodeElement = env.element;
+                let preElement = prismCodeElement.parentElement;
                 if (!preElement)
                     return;
-                var container = preElement.parentElement;
+                let container = preElement.parentElement;
                 if (!container)
                     return;
-                var styleElement = container.previousElementSibling;
+                let styleElement = container.previousElementSibling;
                 // toggle verbosity 
                 // classList : IE >= 10
-                var verbosity = prismCodeElement.classList.contains("style-verbose");
-                if (verbosity)
+                const verbosity = prismCodeElement.classList.contains("style-verbose");
+                if (verbosity) {
                     prismCodeElement.classList.remove("style-verbose");
-                else
+                }
+                else {
                     prismCodeElement.classList.add("style-verbose");
+                }
                 // reset to original code
                 prismCodeElement.textContent = Utils.extractCSSRulesStringFromStyleElement(styleElement, !verbosity);
                 Prism.highlightElement(prismCodeElement);
             }
         });
-    };
+    }
     /**
      * Append htmlBox & cssBox to <script> like followings.
      *
@@ -167,11 +168,11 @@ var Utils = /** @class */ (function () {
      * <p>...</p>
      * <div>...</div>
      */
-    Utils.createCodeElementAll = function () {
-        var exampleStyles = document.body.querySelectorAll("style.example");
-        Array.prototype.forEach.call(exampleStyles, function (exampleStyle) {
+    static createCodeElementAll() {
+        let exampleStyles = document.body.querySelectorAll("style.example");
+        Array.prototype.forEach.call(exampleStyles, (exampleStyle) => {
             // 1. html
-            var next = exampleStyle.nextElementSibling;
+            let next = exampleStyle.nextElementSibling;
             if (next) {
                 // <p>는 opitonal
                 if (next.nodeName == 'P') {
@@ -184,9 +185,9 @@ var Utils = /** @class */ (function () {
             // 2. style
             Utils.createPrismCodeElementFromSourceContainer(exampleStyle);
             // 3. wrap html and style with container
-            var cssBox = exampleStyle.nextElementSibling;
-            var htmlBox = cssBox.nextElementSibling;
-            var container = document.createElement("div");
+            let cssBox = exampleStyle.nextElementSibling;
+            let htmlBox = cssBox.nextElementSibling;
+            let container = document.createElement("div");
             container.className = "sources-container";
             (exampleStyle.parentElement).insertBefore(container, cssBox);
             container.appendChild(cssBox);
@@ -194,7 +195,7 @@ var Utils = /** @class */ (function () {
         });
         // 3. buttons
         Utils.registerPrismButtons();
-    };
+    }
     /**
      * HTML 파일에서 style과 html를 추출해서 보여준다.
      *
@@ -212,12 +213,11 @@ var Utils = /** @class */ (function () {
      * <p>...optional...</p>
      * <div>...HTML...</div>
      */
-    Utils.configureShowSources = function () {
-        Utils.ready(function () {
+    static configureShowSources() {
+        Utils.ready(() => {
             Utils.createCodeElementAll();
             // 이벤트 핸들링 순서에 따른 문제가 발생할 수 있어서 data-manual을 지정해서 자동으로 적용하는 것을 막은 후에 수동으로 명령을 실행한다.
             Prism.highlightAll();
         });
-    };
-    return Utils;
-}());
+    }
+}

@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/thatseeyou/css3-examples#readme",
   "devDependencies": {
-    "lite-server": "^2.3.0",
-    "typescript": "^2.6.2"
+    "lite-server": "^2.6.1",
+    "typescript": "^4.1.2"
   }
 }

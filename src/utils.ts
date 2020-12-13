@@ -1,7 +1,7 @@
 declare const Prism: any;
 
 class Utils {
-    static ready(cb:()=>any) {
+    static ready(cb: () => any) {
         if (/^loaded|^i|^c/.test(document.readyState)) {
             console.log('already loaded???');
             cb();
@@ -23,14 +23,17 @@ class Utils {
     }
 
     static diffComputedStyleForElements(element1: Element, element2: Element) {
-        let style1 = window.getComputedStyle(element1);
-        let style2 = window.getComputedStyle(element2);
+        const style1 = window.getComputedStyle(element1);
+        const style2 = window.getComputedStyle(element2);
 
-        let id1 = element1.id ? ` id="${element1.id}"`: '';
-        let id2 = element2.id ? ` id="${element2.id}"`: '';
+        console.dir(style1);
+        
 
-        let desc1 = `<${element1.tagName}${id1}>`;
-        let desc2 = `<${element2.tagName}${id2}>`;
+        const id1 = element1.id ? ` id="${element1.id}"` : '';
+        const id2 = element2.id ? ` id="${element2.id}"` : '';
+
+        const desc1 = `<${element1.tagName}${id1}>`;
+        const desc2 = `<${element2.tagName}${id2}>`;
 
         Utils.diffComputedStyle(style1, style2, desc1, desc2);
     }
@@ -38,21 +41,22 @@ class Utils {
     static diffComputedStyle(style1: CSSStyleDeclaration, style2: CSSStyleDeclaration, desc1: string, desc2: string) {
         console.log(`BEGIN diff ${desc1} | ${desc2}`);
 
-        Array.prototype.forEach.call(style1, (styleKey1:string, i:number) => {
-            let styleKey2 = style2[i];
+        for (let i = 0; i < style1.length; i++) {
+            const styleKey1 = style1[i];
+            const styleKey2 = style2[i];
 
-            if (styleKey1 == styleKey2) {
-                let value1 = style1.getPropertyValue(styleKey1);
-                let value2 = style2.getPropertyValue(styleKey1);
+            if (styleKey1 === styleKey2) {
+                const value1 = style1.getPropertyValue(styleKey1);
+                const value2 = style2.getPropertyValue(styleKey1);
 
-                if (value1 != value2) {
+                if (value1 !== value2) {
                     console.log(`[${i}] ${styleKey1} : ${value1} | ${value2}`);
                 }
             }
             else {
                 console.warn(`[${i}] ${styleKey1} | ${styleKey2} ; Key is different`);
             }
-        })
+        }
 
         console.log(`END   diff ${desc1} | ${desc2}`);
         console.log('');
@@ -67,14 +71,14 @@ class Utils {
      * @param {Element} sourceContainer - Source code text will be extracted from sourceElement
      * @param {Element} where - default: nextElementSibling
      */
-    static createPrismCodeElementFromSourceContainer(sourceContainer:Element, where?:Element) {
-        let container = sourceContainer.parentElement as Element;
+    static createPrismCodeElementFromSourceContainer(sourceContainer: Element, where?: Element) {
+        const container = sourceContainer.parentElement as Element;
         if (where == undefined) {
             where = sourceContainer.nextElementSibling as Element;
         }
 
-        var preBox = document.createElement("pre");
-        var codeBox = document.createElement("code");
+        const preBox = document.createElement("pre");
+        const codeBox = document.createElement("code");
         preBox.appendChild(codeBox);
 
         if (sourceContainer.nodeName == 'STYLE') {
@@ -103,13 +107,14 @@ class Utils {
         let content = containerElement.outerHTML;
 
         // 시작하는 <div> 앞의 공백을 </div> 앞의 공백과 맞추는 작업을 한다.
-        let lines = content.split('\n');
+        const lines = content.split('\n');
         lines.shift(); /* lines from 2nd line */
-        let minIndentation = lines.reduce((minIndentation:number, line:string) => {
-            let numIndentation = line.search(/[^\s]+/);
+        const minIndentation = lines.reduce((minIndentation:number, line:string) => {
+            const numIndentation = line.search(/[^\s]+/);
 
-            if (numIndentation < 0)
+            if (numIndentation < 0) {
                 return minIndentation;
+            }
 
             return (numIndentation < minIndentation) ? numIndentation : minIndentation;
         }, 8);
@@ -129,21 +134,19 @@ class Utils {
         let rulesString = '';
 
         if (showVerbose) {
-            let cssRules = (styleElement.sheet as CSSStyleSheet).cssRules;
+            const cssRules = (styleElement.sheet as CSSStyleSheet).cssRules;
 
-            let map = Array.prototype.map;
-
-            rulesString = map.call(cssRules, (cssRule:CSSRule, index:number, cssRules:CSSRuleList) => {
+            rulesString = Object.values(cssRules).map(cssRule => {
                 if (cssRule.type != CSSRule.STYLE_RULE) 
                     return ''
 
-                let cssStyleRule = cssRule as CSSStyleRule;
-                let selector = cssStyleRule.selectorText;
+                const cssStyleRule = cssRule as CSSStyleRule;
+                const selector = cssStyleRule.selectorText;
 
-                let styles = map.call(cssStyleRule.style, (styleKey:string, index:number, style:CSSStyleDeclaration) => {
-                    let value = style.getPropertyValue(styleKey);
-                    return (style.length > 1) ? `    ${styleKey}: ${value};\n` : `${styleKey}: ${value}; `;
-                }).join('')
+                const styles = Object.values(cssStyleRule.style).map((styleKey: string) => {
+                    const value = cssStyleRule.style.getPropertyValue(styleKey);
+                    return (cssStyleRule.style.length > 1) ? `    ${styleKey}: ${value};\n` : `${styleKey}: ${value}; `;
+                }).join('');
 
                 return (cssStyleRule.style.length > 1) ? `${selector} {\n${styles}}\n` : `${selector} { ${styles}}\n`;
             }).join('');
@@ -177,11 +180,12 @@ class Utils {
 
                 // toggle verbosity 
                 // classList : IE >= 10
-                let verbosity = prismCodeElement.classList.contains("style-verbose");
-                if (verbosity) 
+                const verbosity = prismCodeElement.classList.contains("style-verbose");
+                if (verbosity) {
                     prismCodeElement.classList.remove("style-verbose");
-                else
+                } else {
                     prismCodeElement.classList.add("style-verbose");
+                }
 
                 // reset to original code
                 prismCodeElement.textContent = Utils.extractCSSRulesStringFromStyleElement(styleElement, !verbosity);
