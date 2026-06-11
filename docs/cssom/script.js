@@ -1,3 +1,4 @@
+"use strict";
 function getStyleSheetsHierarchy() {
     let styleSheets = document.styleSheets;
     Array.prototype.forEach.call(styleSheets, (styleSheet, index) => {

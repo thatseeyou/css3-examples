@@ -1,3 +1,4 @@
+"use strict";
 class Utils {
     static ready(cb) {
         if (/^loaded|^i|^c/.test(document.readyState)) {
@@ -132,7 +133,7 @@ class Utils {
      */
     static registerPrismButtons() {
         Prism.plugins.toolbar.registerButton('verbose', {
-            text: 'on/off verbosity',
+            text: 'on/off verbosity', // required
             onClick: function (env) {
                 let prismCodeElement = env.element;
                 let preElement = prismCodeElement.parentElement;

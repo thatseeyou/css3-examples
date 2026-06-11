@@ -1,7 +1,0 @@
-{
-	"browser": ["firefox"],
-	"server": {
-		"baseDir": "docs"
-	}
-}
-
