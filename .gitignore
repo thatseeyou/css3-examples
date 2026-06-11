@@ -4,3 +4,5 @@
 # restored by npm install
 node_modules/
 
+
+.vscode/settings.json
